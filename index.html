@@ -1,0 +1,1972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Northbridge Insurance — Car Insurance, Sorted</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,900&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#14213D;
+    --ink-soft:#233559;
+    --paper:#F6F4EF;
+    --paper-raised:#FFFFFF;
+    --accent:#C9971C;
+    --accent-deep:#A87A12;
+    --slate:#3A3F4B;
+    --slate-light:#6B7280;
+    --line:#DAD5C9;
+    --line-soft:#E8E4D9;
+    --success:#2E7D5B;
+    --success-bg:#E7F1EB;
+    --error:#B3261E;
+    --error-bg:#FBEAE8;
+    --radius:3px;
+    --serif: 'Fraunces', Georgia, serif;
+    --sans: 'IBM Plex Sans', -apple-system, Segoe UI, sans-serif;
+    --mono: 'IBM Plex Mono', monospace;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:var(--sans);
+    color:var(--slate);
+    background:var(--paper);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{font-family:var(--serif);color:var(--ink);margin:0;font-weight:600;}
+  p{margin:0;}
+  a{color:inherit;}
+  button{font-family:var(--sans);cursor:pointer;}
+  input,select,textarea{font-family:var(--sans);}
+  ::selection{background:var(--accent);color:#fff;}
+  :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px;}
+
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px;}
+  .wrap-narrow{max-width:760px;margin:0 auto;padding:0 24px;}
+
+  /* ---------- Buttons ---------- */
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    padding:13px 26px;border-radius:var(--radius);border:1px solid transparent;
+    font-size:15px;font-weight:600;transition:background .15s ease,border-color .15s ease,color .15s ease;
+    white-space:nowrap;
+  }
+  .btn-primary{background:var(--accent);color:var(--ink);border-color:var(--accent);}
+  .btn-primary:hover{background:var(--accent-deep);border-color:var(--accent-deep);color:#fff;}
+  .btn-primary:disabled{background:#E9DCB8;border-color:#E9DCB8;color:#9C9370;cursor:not-allowed;}
+  .btn-ink{background:var(--ink);color:#fff;border-color:var(--ink);}
+  .btn-ink:hover{background:var(--ink-soft);}
+  .btn-outline{background:transparent;color:var(--ink);border-color:var(--ink);}
+  .btn-outline:hover{background:var(--ink);color:#fff;}
+  .btn-ghost{background:transparent;color:var(--slate);border-color:transparent;}
+  .btn-ghost:hover{color:var(--ink);text-decoration:underline;}
+  .btn-danger{background:transparent;color:var(--error);border-color:var(--error);}
+  .btn-danger:hover{background:var(--error);color:#fff;}
+  .btn-sm{padding:8px 14px;font-size:13px;}
+  .btn-block{width:100%;}
+
+  /* ---------- Header / Nav ---------- */
+  .site-header{border-bottom:1px solid var(--line);background:var(--paper-raised);position:sticky;top:0;z-index:50;}
+  .site-header .inner{display:flex;align-items:center;justify-content:space-between;padding:18px 0;}
+  .logo{display:flex;align-items:baseline;gap:8px;cursor:pointer;}
+  .logo .mark{font-family:var(--serif);font-weight:700;font-size:22px;color:var(--ink);letter-spacing:-0.01em;}
+  .logo .mark span{color:var(--accent-deep);}
+  .logo .sub{font-size:11px;color:var(--slate-light);letter-spacing:.02em;}
+  .nav-actions{display:flex;align-items:center;gap:10px;}
+  .nav-link{font-size:14px;font-weight:600;color:var(--ink);padding:10px 6px;}
+  .nav-link:hover{color:var(--accent-deep);}
+  .site-footer{border-top:1px solid var(--line);margin-top:80px;padding:36px 0;}
+  .site-footer .inner{display:flex;flex-wrap:wrap;gap:18px;justify-content:space-between;align-items:center;font-size:13px;color:var(--slate-light);}
+  .site-footer a{color:var(--slate-light);text-decoration:underline;text-underline-offset:2px;}
+  .site-footer a:hover{color:var(--ink);}
+
+  /* ---------- Hero ---------- */
+  .hero{padding:64px 0 56px;}
+  .hero .grid{display:grid;grid-template-columns:1.15fr 0.85fr;gap:56px;align-items:center;}
+  .eyebrow-plain{font-size:14px;color:var(--slate-light);margin-bottom:14px;}
+  .hero h1{font-size:clamp(34px,4.4vw,54px);line-height:1.05;letter-spacing:-0.01em;max-width:11ch;}
+  .hero .lede{margin-top:20px;font-size:17px;color:var(--slate);max-width:46ch;}
+  .hero .cta-row{margin-top:32px;display:flex;gap:14px;flex-wrap:wrap;align-items:center;}
+  .hero .microcopy{margin-top:14px;font-size:13px;color:var(--slate-light);}
+
+  .cover-note{
+    background:var(--ink);color:#EDEAE0;border-radius:6px;padding:28px;
+    font-family:var(--mono);position:relative;box-shadow:0 24px 48px -20px rgba(20,33,61,.45);
+  }
+  .cover-note::before{content:"";position:absolute;top:0;left:24px;right:24px;height:1px;background:rgba(237,234,224,.18);top:64px;}
+  .cover-note .cn-top{display:flex;justify-content:space-between;font-size:11px;color:#B9C2D6;text-transform:uppercase;letter-spacing:.08em;padding-bottom:16px;}
+  .cover-note .cn-body{padding-top:22px;}
+  .cover-note .cn-row{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px dashed rgba(237,234,224,.16);font-size:13px;}
+  .cover-note .cn-row span:first-child{color:#8E9BB8;}
+  .cover-note .cn-price{font-family:var(--serif);font-size:32px;color:#fff;margin-top:18px;font-weight:600;}
+  .cover-note .cn-price small{font-family:var(--sans);font-size:13px;color:#B9C2D6;font-weight:400;}
+  .cover-note .cn-stamp{position:absolute;top:-11px;right:-10px;border:1.5px solid var(--accent);background:var(--ink);color:var(--accent);font-family:var(--sans);font-size:10px;font-weight:700;padding:4px 9px;border-radius:20px;letter-spacing:.06em;transform:rotate(4deg);}
+
+  .strip{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:28px 0;}
+  .strip .row{display:flex;gap:40px;flex-wrap:wrap;justify-content:space-between;}
+  .strip .item{flex:1;min-width:200px;}
+  .strip .item .num{font-family:var(--serif);font-size:26px;color:var(--ink);font-weight:600;}
+  .strip .item .lab{font-size:13px;color:var(--slate-light);margin-top:4px;}
+
+  .section{padding:64px 0;}
+  .section h2{font-size:clamp(24px,3vw,32px);max-width:20ch;}
+  .section .lede{margin-top:14px;color:var(--slate-light);max-width:56ch;font-size:15.5px;}
+  .cards3{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:36px;border-top:1px solid var(--line);}
+  .cards3 .card{padding:26px 22px 26px 0;border-bottom:1px solid var(--line);}
+  .cards3 .card:not(:last-child){border-right:1px solid var(--line);padding-right:26px;}
+  .cards3 .card .idx{font-family:var(--mono);font-size:12px;color:var(--accent-deep);}
+  .cards3 .card h3{font-size:18px;margin-top:10px;}
+  .cards3 .card p{font-size:14px;color:var(--slate-light);margin-top:8px;}
+
+  /* ---------- Form shell (quote journey) ---------- */
+  .form-shell{padding:32px 0 80px;}
+  .progress-wrap{margin-bottom:36px;}
+  .progress-steps{display:flex;gap:0;list-style:none;padding:0;margin:0 0 10px;}
+  .progress-steps li{flex:1;text-align:center;font-size:11px;color:var(--slate-light);position:relative;padding-top:26px;}
+  .progress-steps li::before{content:attr(data-n);position:absolute;top:0;left:50%;transform:translateX(-50%);
+    width:20px;height:20px;border-radius:50%;background:var(--paper-raised);border:1.5px solid var(--line);
+    font-family:var(--mono);font-size:11px;color:var(--slate-light);display:flex;align-items:center;justify-content:center;}
+  .progress-steps li.done::before{content:"✓";background:var(--ink);border-color:var(--ink);color:#fff;}
+  .progress-steps li.active::before{background:var(--accent);border-color:var(--accent);color:var(--ink);font-weight:700;}
+  .progress-steps li.active{color:var(--ink);font-weight:600;}
+  .progress-steps li::after{content:"";position:absolute;top:10px;left:-50%;width:100%;height:1px;background:var(--line);z-index:-1;}
+  .progress-steps li:first-child::after{display:none;}
+  .progress-bar-mobile{display:none;}
+  .progress-bar-track{height:4px;background:var(--line-soft);border-radius:2px;overflow:hidden;}
+  .progress-bar-fill{height:100%;background:var(--accent);transition:width .3s ease;}
+
+  .form-card{background:var(--paper-raised);border:1px solid var(--line);border-radius:6px;padding:36px;}
+  .form-card h2{font-size:22px;}
+  .form-card .step-hint{font-size:13px;color:var(--slate-light);margin-top:6px;margin-bottom:28px;}
+  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px;}
+  .field-row.one{grid-template-columns:1fr;}
+  .field-row.three{grid-template-columns:1fr 1fr 1fr;}
+  .field{display:flex;flex-direction:column;gap:6px;}
+  .field label{font-size:13px;font-weight:600;color:var(--ink);}
+  .field .hint{font-size:12px;color:var(--slate-light);font-weight:400;}
+  .field input[type=text],.field input[type=email],.field input[type=tel],.field input[type=date],.field input[type=number],.field select,.field textarea{
+    padding:11px 12px;border:1px solid var(--line);border-radius:var(--radius);font-size:14.5px;color:var(--ink);background:#fff;
+  }
+  .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--ink);}
+  .field.error input,.field.error select{border-color:var(--error);background:var(--error-bg);}
+  .field .err-msg{font-size:12.5px;color:var(--error);display:none;}
+  .field.error .err-msg{display:block;}
+  .radio-group{display:flex;flex-direction:column;gap:10px;}
+  .radio-card{display:flex;gap:12px;align-items:flex-start;border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;cursor:pointer;}
+  .radio-card:hover{border-color:var(--ink-soft);}
+  .radio-card.selected{border-color:var(--ink);background:#FBFAF7;box-shadow:inset 0 0 0 1px var(--ink);}
+  .radio-card input{margin-top:3px;}
+  .radio-card .rc-title{font-weight:600;color:var(--ink);font-size:14.5px;}
+  .radio-card .rc-sub{font-size:13px;color:var(--slate-light);margin-top:2px;}
+  .check-row{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--line-soft);}
+  .check-row:last-child{border-bottom:none;}
+  .check-row label{font-size:14px;color:var(--ink);font-weight:500;}
+  .check-row .sub{font-size:12.5px;color:var(--slate-light);}
+  .toggle-yn{display:flex;gap:10px;}
+  .toggle-yn button{flex:1;padding:10px;border:1px solid var(--line);background:#fff;border-radius:var(--radius);font-weight:600;font-size:14px;color:var(--slate);}
+  .toggle-yn button.active{background:var(--ink);color:#fff;border-color:var(--ink);}
+  .conditional-block{margin-top:6px;padding:16px;background:#FBFAF7;border:1px dashed var(--line);border-radius:var(--radius);}
+  .lookup-row{display:flex;gap:10px;align-items:flex-end;}
+  .lookup-row .field{flex:1;}
+  .vehicle-result{margin-top:18px;padding:16px;border:1px solid var(--line);border-radius:var(--radius);background:#FBFAF7;display:none;}
+  .vehicle-result.show{display:block;}
+  .vehicle-result .vr-row{display:flex;justify-content:space-between;font-size:14px;padding:4px 0;}
+  .vehicle-result .vr-row span:first-child{color:var(--slate-light);}
+  .form-actions{display:flex;justify-content:space-between;align-items:center;margin-top:32px;padding-top:22px;border-top:1px solid var(--line-soft);}
+  .spinner{width:16px;height:16px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:inline-block;}
+  .spinner.dark{border:2px solid rgba(20,33,61,.25);border-top-color:var(--ink);}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .loading-panel{text-align:center;padding:70px 20px;}
+  .loading-panel .pulse-list{margin-top:26px;display:inline-block;text-align:left;}
+  .loading-panel .pulse-item{font-size:14px;color:var(--slate-light);padding:6px 0;display:flex;gap:10px;align-items:center;}
+  .loading-panel .pulse-item.done{color:var(--success);}
+  .loading-panel .pulse-item .dot{width:8px;height:8px;border-radius:50%;background:var(--line);}
+  .loading-panel .pulse-item.done .dot{background:var(--success);}
+
+  /* ---------- Quote results ---------- */
+  .quotes-header{padding:36px 0 12px;}
+  .quote-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:24px;align-items:stretch;}
+  .quote-card{border:1px solid var(--line);border-radius:6px;background:#fff;display:flex;flex-direction:column;position:relative;}
+  .quote-card.best::before{content:"Best value";position:absolute;top:-11px;left:20px;background:var(--accent);color:var(--ink);font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;}
+  .quote-card .qc-head{padding:22px 22px 16px;border-bottom:1px solid var(--line-soft);}
+  .quote-card .insurer{font-family:var(--serif);font-size:19px;color:var(--ink);font-weight:600;}
+  .quote-card .cover-badge{display:inline-block;margin-top:8px;font-size:12px;background:#EEF1F7;color:var(--ink-soft);padding:3px 9px;border-radius:20px;font-weight:600;}
+  .quote-card .qc-price{padding:18px 22px;border-bottom:1px solid var(--line-soft);}
+  .quote-card .price-annual{font-family:var(--serif);font-size:30px;color:var(--ink);font-weight:600;}
+  .quote-card .price-monthly{font-size:13px;color:var(--slate-light);margin-top:4px;}
+  .quote-card .qc-details{padding:16px 22px;flex:1;}
+  .quote-card .qc-details .dr{display:flex;justify-content:space-between;font-size:13.5px;padding:6px 0;border-bottom:1px solid var(--line-soft);}
+  .quote-card .qc-details .dr span:first-child{color:var(--slate-light);}
+  .quote-card .benefits{list-style:none;margin:10px 0 0;padding:0;}
+  .quote-card .benefits li{font-size:13px;padding:4px 0 4px 20px;position:relative;color:var(--slate);}
+  .quote-card .benefits li::before{content:"✓";position:absolute;left:0;color:var(--success);font-weight:700;}
+  .quote-card .qc-actions{padding:18px 22px 22px;display:flex;flex-direction:column;gap:10px;}
+
+  /* ---------- Purchase / payment ---------- */
+  .summary-block{border:1px solid var(--line);border-radius:6px;background:#fff;margin-bottom:22px;overflow:hidden;}
+  .summary-block .sb-head{padding:16px 22px;background:#FBFAF7;border-bottom:1px solid var(--line);font-weight:600;color:var(--ink);font-size:14px;display:flex;justify-content:space-between;align-items:center;}
+  .summary-block .sb-head a{font-size:12.5px;color:var(--ink-soft);text-decoration:underline;font-weight:500;}
+  .summary-block .sb-body{padding:6px 22px;}
+  .summary-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line-soft);font-size:14px;}
+  .summary-row:last-child{border-bottom:none;}
+  .summary-row span:first-child{color:var(--slate-light);}
+  .summary-row span:last-child{color:var(--ink);font-weight:500;text-align:right;}
+  .price-total{display:flex;justify-content:space-between;align-items:baseline;padding:20px 22px;background:var(--ink);color:#fff;border-radius:6px;margin-bottom:24px;}
+  .price-total .lab{font-size:14px;color:#C9D2E5;}
+  .price-total .val{font-family:var(--serif);font-size:26px;font-weight:600;}
+  .price-total .val small{font-family:var(--sans);font-size:13px;color:#C9D2E5;font-weight:400;}
+  .card-mock{display:flex;gap:10px;margin-bottom:20px;}
+  .card-mock-face{flex:1;height:150px;border-radius:10px;background:linear-gradient(135deg,var(--ink),var(--ink-soft));color:#fff;padding:20px;position:relative;font-family:var(--mono);}
+  .card-mock-face .cnum{font-size:17px;letter-spacing:.1em;margin-top:34px;}
+  .card-mock-face .crow{display:flex;justify-content:space-between;margin-top:18px;font-size:11px;color:#B9C2D6;text-transform:uppercase;}
+  .card-mock-face .cbrand{position:absolute;top:20px;right:20px;font-family:var(--sans);font-weight:700;font-size:12px;letter-spacing:.05em;}
+  .pay-note{font-size:12.5px;color:var(--slate-light);background:#FBFAF7;border:1px solid var(--line);border-radius:var(--radius);padding:10px 14px;margin-bottom:20px;}
+
+  .success-panel{text-align:center;padding:60px 20px;}
+  .success-check{width:64px;height:64px;border-radius:50%;background:var(--success-bg);color:var(--success);display:flex;align-items:center;justify-content:center;margin:0 auto 22px;font-size:30px;}
+  .policy-num-box{display:inline-block;margin:18px auto;padding:14px 24px;border:1px dashed var(--line);border-radius:var(--radius);font-family:var(--mono);font-size:18px;color:var(--ink);background:#FBFAF7;}
+  .email-status{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;color:var(--slate-light);margin-top:8px;}
+  .email-status .dot{width:7px;height:7px;border-radius:50%;background:var(--success);}
+
+  /* ---------- Alerts / toasts ---------- */
+  .banner{display:flex;gap:10px;align-items:flex-start;padding:12px 16px;border-radius:var(--radius);font-size:13.5px;margin-bottom:18px;}
+  .banner.error{background:var(--error-bg);color:var(--error);border:1px solid #EFC9C5;}
+  .banner.success{background:var(--success-bg);color:var(--success);border:1px solid #C6E3D2;}
+  .banner.info{background:#EEF1F7;color:var(--ink-soft);border:1px solid #D6DCEA;}
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:13px 22px;border-radius:6px;font-size:14px;box-shadow:0 12px 30px rgba(20,33,61,.3);z-index:200;opacity:0;pointer-events:none;transition:opacity .25s ease, transform .25s ease;}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(-6px);}
+
+  /* ---------- Auth ---------- */
+  .auth-shell{padding:70px 0 100px;}
+  .auth-card{max-width:420px;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:6px;padding:36px;}
+  .auth-card h2{font-size:22px;text-align:center;}
+  .auth-card .sub{text-align:center;font-size:13.5px;color:var(--slate-light);margin-top:8px;margin-bottom:26px;}
+  .demo-hint{background:#EEF1F7;border:1px solid #D6DCEA;border-radius:var(--radius);padding:10px 14px;font-size:12.5px;color:var(--ink-soft);margin-bottom:20px;}
+
+  /* ---------- Portal / Admin shell ---------- */
+  .app-shell{display:grid;grid-template-columns:230px 1fr;min-height:calc(100vh - 65px);}
+  .app-sidebar{border-right:1px solid var(--line);background:#fff;padding:26px 0;}
+  .app-sidebar .sb-title{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--slate-light);padding:0 22px;margin-bottom:10px;}
+  .app-sidebar nav{display:flex;flex-direction:column;}
+  .app-sidebar nav a{padding:11px 22px;font-size:14px;color:var(--slate);font-weight:500;border-left:3px solid transparent;cursor:pointer;}
+  .app-sidebar nav a:hover{background:#FBFAF7;color:var(--ink);}
+  .app-sidebar nav a.active{border-left-color:var(--accent);background:#FBFAF7;color:var(--ink);font-weight:600;}
+  .app-main{padding:34px 36px;}
+  .app-main h1.page-title{font-size:24px;margin-bottom:4px;}
+  .page-sub{font-size:13.5px;color:var(--slate-light);margin-bottom:26px;}
+
+  .stat-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:0;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:#fff;margin-bottom:30px;}
+  .stat-cell{padding:20px 20px;border-right:1px solid var(--line);}
+  .stat-cell:last-child{border-right:none;}
+  .stat-cell .s-num{font-family:var(--serif);font-size:26px;color:var(--ink);font-weight:600;}
+  .stat-cell .s-lab{font-size:12.5px;color:var(--slate-light);margin-top:4px;}
+
+  .panel{background:#fff;border:1px solid var(--line);border-radius:6px;margin-bottom:24px;}
+  .panel .p-head{padding:16px 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;}
+  .panel .p-head h3{font-size:15.5px;}
+  .panel .p-body{padding:20px 22px;}
+
+  .policy-hero{display:grid;grid-template-columns:1.3fr 1fr;gap:0;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:#fff;margin-bottom:26px;}
+  .policy-hero .ph-left{padding:26px;border-right:1px solid var(--line);}
+  .policy-hero .ph-right{padding:26px;background:#FBFAF7;}
+  .ph-status{display:inline-block;font-size:11.5px;font-weight:700;padding:3px 10px;border-radius:20px;background:var(--success-bg);color:var(--success);margin-bottom:12px;}
+  .policy-hero .pn{font-family:var(--mono);font-size:15px;color:var(--ink-soft);margin-bottom:4px;}
+  .policy-hero h2{font-size:21px;}
+  .kv-list{margin-top:16px;}
+  .kv-list .kv{display:flex;justify-content:space-between;font-size:13.5px;padding:7px 0;border-bottom:1px solid var(--line-soft);}
+  .kv-list .kv span:first-child{color:var(--slate-light);}
+  .action-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px;}
+
+  table.data-table{width:100%;border-collapse:collapse;font-size:13.5px;}
+  table.data-table th{text-align:left;font-size:11.5px;text-transform:uppercase;letter-spacing:.03em;color:var(--slate-light);padding:10px 14px;border-bottom:1px solid var(--line);background:#FBFAF7;}
+  table.data-table td{padding:12px 14px;border-bottom:1px solid var(--line-soft);color:var(--slate);}
+  table.data-table tr:last-child td{border-bottom:none;}
+  table.data-table tr:hover td{background:#FBFAF7;}
+  .pill{display:inline-block;font-size:11.5px;font-weight:600;padding:3px 9px;border-radius:20px;}
+  .pill.green{background:var(--success-bg);color:var(--success);}
+  .pill.amber{background:#FBF1DA;color:var(--accent-deep);}
+  .pill.red{background:var(--error-bg);color:var(--error);}
+  .pill.grey{background:#EEF1F7;color:var(--ink-soft);}
+  .table-toolbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;gap:12px;flex-wrap:wrap;}
+  .search-box{padding:9px 12px;border:1px solid var(--line);border-radius:var(--radius);font-size:13.5px;width:240px;background:#fff;}
+  .bar-chart{display:flex;align-items:flex-end;gap:14px;height:140px;padding:10px 0;}
+  .bar-chart .bar-col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:8px;}
+  .bar-chart .bar{width:100%;background:var(--accent);border-radius:3px 3px 0 0;min-height:4px;}
+  .bar-chart .bar-lab{font-size:11px;color:var(--slate-light);}
+  .bar-chart .bar-val{font-size:12px;color:var(--ink);font-weight:600;}
+
+  .modal-overlay{position:fixed;inset:0;background:rgba(20,33,61,.45);display:none;align-items:center;justify-content:center;z-index:300;padding:20px;}
+  .modal-overlay.show{display:flex;}
+  .modal-box{background:#fff;border-radius:8px;max-width:520px;width:100%;max-height:86vh;overflow-y:auto;padding:30px;}
+  .modal-box h3{font-size:19px;margin-bottom:16px;}
+  .modal-close-row{display:flex;justify-content:flex-end;margin-top:24px;gap:10px;}
+
+  .badge-top{font-size:11px;color:var(--slate-light);}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 900px){
+    .hero .grid{grid-template-columns:1fr;gap:36px;}
+    .cover-note{max-width:420px;}
+    .cards3{grid-template-columns:1fr;}
+    .cards3 .card{border-right:none !important;padding-right:0 !important;}
+    .quote-grid{grid-template-columns:1fr;}
+    .field-row,.field-row.three{grid-template-columns:1fr;}
+    .app-shell{grid-template-columns:1fr;}
+    .app-sidebar{border-right:none;border-bottom:1px solid var(--line);padding:14px 0;}
+    .app-sidebar nav{flex-direction:row;flex-wrap:wrap;padding:0 12px;gap:4px;}
+    .app-sidebar nav a{border-left:none;border-bottom:3px solid transparent;padding:8px 12px;}
+    .app-sidebar nav a.active{border-left:none;border-bottom-color:var(--accent);}
+    .app-sidebar .sb-title{display:none;}
+    .stat-grid{grid-template-columns:repeat(2,1fr);}
+    .stat-cell{border-bottom:1px solid var(--line);}
+    .policy-hero{grid-template-columns:1fr;}
+    .policy-hero .ph-left{border-right:none;border-bottom:1px solid var(--line);}
+    .action-grid{grid-template-columns:1fr;}
+    .progress-steps li span.lab-text{display:none;}
+  }
+  @media (max-width: 600px){
+    .wrap,.wrap-narrow{padding:0 16px;}
+    .site-header .inner{padding:14px 0;}
+    .form-card{padding:22px 18px;}
+    .progress-steps{display:none;}
+    .progress-bar-mobile{display:block;}
+    .nav-actions .nav-link.hide-mobile{display:none;}
+    table.data-table{font-size:12.5px;}
+    .app-main{padding:22px 16px;}
+  }
+</style>
+</head>
+<body>
+
+<div id="toast" class="toast"></div>
+<div id="modal-root"></div>
+<div id="app"></div>
+
+<script>
+/* =========================================================================
+   NORTHBRIDGE INSURANCE — POC
+   Single-file demo app. All data is mocked. No real payment / verification.
+   ========================================================================= */
+
+/* ---------------------------- Dummy data -------------------------------- */
+
+const VEHICLE_DB = {
+  "AB12CDE": { make:"Ford", model:"Fiesta 1.0 EcoBoost Titanium", year:2019, value:9200 },
+  "LM19XYZ": { make:"Volkswagen", model:"Golf 1.5 TSI Life", year:2021, value:16800 },
+  "BD68HJL": { make:"Vauxhall", model:"Corsa 1.2 SE", year:2018, value:6900 },
+};
+const VEHICLE_FALLBACK = { make:"Toyota", model:"Yaris 1.5 Hybrid Icon", year:2020, value:12400 };
+
+const OCCUPATIONS = ["Teacher","Software Developer","Nurse","Accountant","Retail Assistant","Electrician","Plumber","Marketing Manager","Civil Servant","Self-employed Consultant","Chef","Delivery Driver","Student","Retired","Other"];
+const INDUSTRIES = ["Education","Technology","Healthcare","Finance","Retail","Construction","Public Sector","Hospitality","Transport","Other"];
+
+const INSURER_PROFILES = [
+  { name:"Meridian Direct", multiplier:0.94, excessBase:250, rating:"4.6/5 (12,400 reviews)" },
+  { name:"Castlegate Insurance", multiplier:1.00, excessBase:200, rating:"4.4/5 (8,150 reviews)" },
+  { name:"Anchor & Oak Insurance", multiplier:1.13, excessBase:150, rating:"4.7/5 (5,960 reviews)" },
+];
+
+const CUSTOMERS = [
+  {id:"CUS-1001",name:"Sarah Mitchell",email:"sarah.mitchell@email.com",phone:"07700 900123",policies:1,joined:"12 Mar 2024"},
+  {id:"CUS-1002",name:"James Okafor",email:"james.okafor@email.com",phone:"07700 900456",policies:1,joined:"03 Jun 2024"},
+  {id:"CUS-1003",name:"Priya Anand",email:"priya.anand@email.com",phone:"07700 900789",policies:0,joined:"22 Jul 2024"},
+  {id:"CUS-1004",name:"Tom Reid",email:"tom.reid@email.com",phone:"07700 900321",policies:1,joined:"05 Sep 2024"},
+  {id:"CUS-1005",name:"Elena Novak",email:"elena.novak@email.com",phone:"07700 900654",policies:1,joined:"18 Jan 2025"},
+  {id:"CUS-1006",name:"David Chen",email:"david.chen@email.com",phone:"07700 900987",policies:1,joined:"29 Feb 2025"},
+  {id:"CUS-1007",name:"Fatima Hussain",email:"fatima.hussain@email.com",phone:"07700 900112",policies:1,joined:"14 Apr 2025"},
+  {id:"CUS-1008",name:"Liam O'Sullivan",email:"liam.osullivan@email.com",phone:"07700 900774",policies:0,joined:"02 Aug 2025"},
+];
+
+const QUOTES_LOG = [
+  {id:"QT-58291",customer:"Sarah Mitchell",vehicle:"Ford Fiesta",date:"01 Sep 2026",status:"Converted",premium:"£612.40"},
+  {id:"QT-58312",customer:"James Okafor",vehicle:"VW Golf",date:"02 Sep 2026",status:"Converted",premium:"£748.90"},
+  {id:"QT-58340",customer:"Priya Anand",vehicle:"Vauxhall Corsa",date:"03 Sep 2026",status:"Expired",premium:"£589.20"},
+  {id:"QT-58355",customer:"Tom Reid",vehicle:"Toyota Yaris",date:"04 Sep 2026",status:"Converted",premium:"£671.00"},
+  {id:"QT-58379",customer:"Elena Novak",vehicle:"Ford Fiesta",date:"05 Sep 2026",status:"Converted",premium:"£803.50"},
+  {id:"QT-58402",customer:"David Chen",vehicle:"VW Golf",date:"05 Sep 2026",status:"Converted",premium:"£692.10"},
+  {id:"QT-58415",customer:"Fatima Hussain",vehicle:"Vauxhall Corsa",date:"06 Sep 2026",status:"Converted",premium:"£558.70"},
+  {id:"QT-58431",customer:"Liam O'Sullivan",vehicle:"Toyota Yaris",date:"07 Sep 2026",status:"Quoted",premium:"£629.90"},
+  {id:"QT-58447",customer:"New lead",vehicle:"Ford Fiesta",date:"08 Sep 2026",status:"Quoted",premium:"£601.20"},
+  {id:"QT-58460",customer:"New lead",vehicle:"VW Golf",date:"09 Sep 2026",status:"Quoted",premium:"£714.80"},
+];
+
+const POLICIES = [
+  {number:"NB-2026-00421",customer:"Sarah Mitchell",insurer:"Meridian Direct",cover:"Comprehensive",start:"15 Mar 2026",renewal:"15 Mar 2027",status:"Active",premium:"£58.40/mo"},
+  {number:"NB-2025-00287",customer:"James Okafor",insurer:"Castlegate Insurance",cover:"Comprehensive",start:"10 Jun 2025",renewal:"10 Jun 2026",status:"Active",premium:"£71.90/mo"},
+  {number:"NB-2025-00198",customer:"Priya Anand",insurer:"Anchor & Oak Insurance",cover:"Third Party, Fire & Theft",start:"01 Aug 2024",renewal:"01 Aug 2025",status:"Cancelled",premium:"£54.10/mo"},
+  {number:"NB-2026-00512",customer:"Tom Reid",insurer:"Meridian Direct",cover:"Comprehensive",start:"09 Sep 2025",renewal:"09 Sep 2026",status:"Active",premium:"£64.30/mo"},
+  {number:"NB-2025-00340",customer:"Elena Novak",insurer:"Castlegate Insurance",cover:"Comprehensive",start:"20 Jan 2026",renewal:"20 Jan 2027",status:"Active",premium:"£78.60/mo"},
+  {number:"NB-2025-00366",customer:"David Chen",insurer:"Meridian Direct",cover:"Third Party, Fire & Theft",start:"02 Mar 2026",renewal:"02 Mar 2027",status:"Active",premium:"£61.20/mo"},
+  {number:"NB-2025-00389",customer:"Fatima Hussain",insurer:"Anchor & Oak Insurance",cover:"Comprehensive",start:"16 Apr 2026",renewal:"16 Apr 2027",status:"Active",premium:"£52.90/mo"},
+  {number:"NB-2024-00121",customer:"Liam O'Sullivan",insurer:"Castlegate Insurance",cover:"Third Party",start:"12 May 2024",renewal:"12 May 2025",status:"Lapsed",premium:"£44.00/mo"},
+];
+
+const PAYMENTS = [
+  {id:"PAY-9931",customer:"Sarah Mitchell",amount:"£58.40",date:"01 Sep 2026",method:"Card ending 4242",status:"Successful"},
+  {id:"PAY-9932",customer:"James Okafor",amount:"£71.90",date:"01 Sep 2026",method:"Card ending 1188",status:"Successful"},
+  {id:"PAY-9933",customer:"Tom Reid",amount:"£64.30",date:"02 Sep 2026",method:"Direct debit",status:"Successful"},
+  {id:"PAY-9934",customer:"Elena Novak",amount:"£78.60",date:"02 Sep 2026",method:"Card ending 3305",status:"Successful"},
+  {id:"PAY-9935",customer:"David Chen",amount:"£61.20",date:"03 Sep 2026",method:"Card ending 7712",status:"Failed"},
+  {id:"PAY-9936",customer:"David Chen",amount:"£61.20",date:"04 Sep 2026",method:"Card ending 7712",status:"Successful"},
+  {id:"PAY-9937",customer:"Fatima Hussain",amount:"£52.90",date:"04 Sep 2026",method:"Direct debit",status:"Successful"},
+  {id:"PAY-9938",customer:"Priya Anand",amount:"£54.10",date:"20 Jul 2025",method:"Card ending 9021",status:"Refunded"},
+  {id:"PAY-9939",customer:"Liam O'Sullivan",amount:"£44.00",date:"12 Apr 2025",method:"Card ending 5567",status:"Successful"},
+  {id:"PAY-9940",customer:"Sarah Mitchell",amount:"£58.40",date:"01 Aug 2026",method:"Card ending 4242",status:"Successful"},
+];
+
+const INSURER_ROWS = [
+  {name:"Meridian Direct",policies:412,rating:"4.6 / 5",since:"2019",contact:"partners@meridiandirect.co.uk"},
+  {name:"Castlegate Insurance",policies:298,rating:"4.4 / 5",since:"2015",contact:"support@castlegateinsurance.co.uk"},
+  {name:"Anchor & Oak Insurance",policies:187,rating:"4.7 / 5",since:"2021",contact:"hello@anchorandoak.co.uk"},
+];
+
+const CLAIMS = [
+  {id:"CLM-3321",customer:"James Okafor",policy:"NB-2025-00287",type:"Accidental Damage",status:"In Progress",date:"20 Aug 2026"},
+  {id:"CLM-3298",customer:"Sarah Mitchell",policy:"NB-2026-00421",type:"Windscreen",status:"Settled",date:"02 Jul 2026"},
+  {id:"CLM-3277",customer:"Elena Novak",policy:"NB-2025-00340",type:"Theft",status:"Settled",date:"14 May 2026"},
+  {id:"CLM-3255",customer:"Fatima Hussain",policy:"NB-2025-00389",type:"Third Party Damage",status:"In Progress",date:"29 Aug 2026"},
+  {id:"CLM-3241",customer:"David Chen",policy:"NB-2025-00366",type:"Fire",status:"Rejected",date:"10 Apr 2026"},
+];
+
+const RENEWALS = [
+  {policy:"NB-2026-00421",customer:"Sarah Mitchell",renewalDate:"15 Mar 2027",newPremium:"£601.10",status:"Pending"},
+  {policy:"NB-2025-00287",customer:"James Okafor",renewalDate:"10 Jun 2026",newPremium:"£742.30",status:"Pending"},
+  {policy:"NB-2026-00512",customer:"Tom Reid",renewalDate:"09 Sep 2026",newPremium:"£658.90",status:"Due soon"},
+  {policy:"NB-2025-00340",customer:"Elena Novak",renewalDate:"20 Jan 2027",newPremium:"£812.40",status:"Pending"},
+  {policy:"NB-2025-00366",customer:"David Chen",renewalDate:"02 Mar 2027",newPremium:"£635.00",status:"Pending"},
+  {policy:"NB-2025-00389",customer:"Fatima Hussain",renewalDate:"16 Apr 2027",newPremium:"£549.80",status:"Pending"},
+];
+
+const CANCELLATIONS = [
+  {policy:"NB-2025-00198",customer:"Priya Anand",date:"02 Jul 2025",reason:"Switched provider",refund:"£84.20"},
+  {policy:"NB-2024-00121",customer:"Liam O'Sullivan",date:"12 May 2025",reason:"Sold vehicle",refund:"£0.00"},
+  {policy:"NB-2023-00089",customer:"Ahmed Bashir",date:"30 Nov 2025",reason:"Non-payment",refund:"£0.00"},
+];
+
+const COMPLAINTS = [
+  {id:"CMP-118",customer:"Tom Reid",subject:"Delay in claim payout",status:"Resolved",date:"14 Jun 2026"},
+  {id:"CMP-124",customer:"David Chen",subject:"Failed payment not retried",status:"Open",date:"03 Sep 2026"},
+  {id:"CMP-109",customer:"Priya Anand",subject:"Refund amount queried",status:"Resolved",date:"25 Jul 2025"},
+];
+
+/* ------------------------------ App state -------------------------------- */
+
+const state = {
+  view: "home",
+  formStep: 1,
+  formData: {
+    reg:"", make:"", model:"", year:"", value:"",
+    title:"Mr", firstName:"", lastName:"", dob:"", gender:"", marital:"Single", email:"", phone:"",
+    addr1:"", addr2:"", city:"", postcode:"", yearsAtAddress:"1-2",
+    licenceType:"Full UK", licenceNumber:"", datePassed:"", points:"0",
+    hasClaims:null, claimsCount:"1", claimType:"Accidental Damage", claimDate:"", claimFault:"Non-fault",
+    hasConvictions:null, convictionCode:"SP30", convictionDate:"",
+    employment:"Employed", jobTitle:"Teacher", industry:"Technology", income:"",
+    mileage:"8000", parking:"Driveway",
+    usage:"Social + Commuting", namedDrivers:"0",
+    coverLevel:"Comprehensive", excess:"250", addons:{breakdown:false,legal:false,courtesy:false,ncdProtect:false},
+    startDate: "",
+  },
+  quotes: [],
+  selectedQuoteIndex: null,
+  policy: null,
+  portalLoggedIn: false,
+  portalUser: null,
+  portalCancelled: false,
+  adminLoggedIn: false,
+  adminSection: "overview",
+};
+
+const TOTAL_STEPS = 9;
+const STEP_LABELS = ["Vehicle","Driver","Address","Licence","Claims","Occupation","Mileage","Usage","Cover"];
+
+/* ------------------------------ Helpers ---------------------------------- */
+
+function $(sel, root){ return (root||document).querySelector(sel); }
+function app(){ return document.getElementById("app"); }
+function esc(s){ return (s===undefined||s===null) ? "" : String(s); }
+function fmtGBP(n){ return "£" + n.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,"); }
+function todayISO(){ const d=new Date(); return d.toISOString().slice(0,10); }
+function addDaysISO(days){ const d=new Date(); d.setDate(d.getDate()+days); return d.toISOString().slice(0,10); }
+function fmtDateNice(iso){
+  if(!iso) return "";
+  const d = new Date(iso+"T00:00:00");
+  const months=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  return d.getDate()+" "+months[d.getMonth()]+" "+d.getFullYear();
+}
+function showToast(msg){
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(()=>t.classList.remove("show"), 2600);
+}
+function go(view, opts){
+  state.view = view;
+  if(opts){ Object.assign(state, opts); }
+  window.scrollTo({top:0, behavior:"instant"});
+  render();
+}
+function openModal(html){
+  const root = document.getElementById("modal-root");
+  root.innerHTML = '<div class="modal-overlay show" id="modal-overlay">'+
+    '<div class="modal-box">'+html+'</div></div>';
+  document.getElementById("modal-overlay").addEventListener("click", function(e){
+    if(e.target.id === "modal-overlay") closeModal();
+  });
+}
+function closeModal(){
+  document.getElementById("modal-root").innerHTML = "";
+}
+function downloadTextFile(filename, content){
+  const blob = new Blob([content], {type:"text/plain"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+/* ------------------------------ Header / Footer --------------------------- */
+
+function headerHTML(activeArea){
+  return `
+  <header class="site-header">
+    <div class="wrap inner">
+      <div class="logo" data-action="go-home">
+        <div>
+          <div class="mark">North<span>bridge</span></div>
+          <div class="sub">Car Insurance</div>
+        </div>
+      </div>
+      <div class="nav-actions">
+        <a class="nav-link hide-mobile" data-action="go-help">Help</a>
+        <a class="nav-link hide-mobile" data-action="go-portal-login">Existing customer login</a>
+        <button class="btn btn-primary btn-sm" data-action="go-quote-start">Get a quote</button>
+      </div>
+    </div>
+  </header>`;
+}
+
+function footerHTML(){
+  return `
+  <footer class="site-footer">
+    <div class="wrap inner">
+      <div>© 2026 Northbridge Insurance. Demo platform — no real cover is issued.</div>
+      <div style="display:flex;gap:16px;flex-wrap:wrap;">
+        <a data-action="go-help">Help &amp; contact</a>
+        <a data-action="go-portal-login">Customer login</a>
+        <a data-action="go-admin-login">Admin</a>
+      </div>
+    </div>
+  </footer>`;
+}
+
+/* ------------------------------ HOME -------------------------------------- */
+
+function renderHome(){
+  app().innerHTML = `
+  ${headerHTML()}
+  <section class="hero">
+    <div class="wrap grid">
+      <div>
+        <div class="eyebrow-plain">Car insurance, without the small print headache</div>
+        <h1>Cover that fits your car, sorted in minutes.</h1>
+        <p class="lede">Tell us about your car and your driving, and we'll compare quotes from three trusted insurers side by side — so you can pick the cover that actually suits you, at a price you understand.</p>
+        <div class="cta-row">
+          <button class="btn btn-primary" data-action="go-quote-start">Get a quote</button>
+          <button class="btn btn-outline" data-action="go-portal-login">Existing customer login</button>
+        </div>
+        <div class="microcopy">Takes about 5 minutes · No card details needed to see your quotes</div>
+      </div>
+      <div class="cover-note">
+        <div class="cn-stamp">SAMPLE</div>
+        <div class="cn-top"><span>Cover note</span><span>NB-2026-00421</span></div>
+        <div class="cn-body">
+          <div class="cn-row"><span>Vehicle</span><span>Ford Fiesta 1.0</span></div>
+          <div class="cn-row"><span>Cover level</span><span>Comprehensive</span></div>
+          <div class="cn-row"><span>Voluntary excess</span><span>£250</span></div>
+          <div class="cn-row"><span>Insurer</span><span>Meridian Direct</span></div>
+          <div class="cn-price">£58.40 <small>/ month</small></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="strip">
+    <div class="wrap row">
+      <div class="item"><div class="num">3</div><div class="lab">insurers compared on every quote</div></div>
+      <div class="item"><div class="num">5 min</div><div class="lab">average time to get a quote</div></div>
+      <div class="item"><div class="num">4.6 / 5</div><div class="lab">average partner insurer rating</div></div>
+      <div class="item"><div class="num">24/7</div><div class="lab">policy documents in your portal</div></div>
+    </div>
+  </section>
+
+  <section class="section wrap">
+    <h2>What car insurance actually covers</h2>
+    <p class="lede">Car insurance protects you financially if your car is damaged, stolen, or involved in an accident — and it's a legal requirement to drive in the UK. The right level of cover depends on your car's value, how you use it, and how much risk you're comfortable carrying yourself.</p>
+    <div class="cards3">
+      <div class="card">
+        <div class="idx">Third party</div>
+        <h3>The legal minimum</h3>
+        <p>Covers damage or injury you cause to other people, vehicles or property. It doesn't cover your own car.</p>
+      </div>
+      <div class="card">
+        <div class="idx">Third party, fire &amp; theft</div>
+        <h3>A bit more protection</h3>
+        <p>Everything in third party, plus cover if your car is stolen or damaged by fire.</p>
+      </div>
+      <div class="card">
+        <div class="idx">Comprehensive</div>
+        <h3>The fullest cover</h3>
+        <p>Covers damage to your own car too, even if the accident was your fault — usually the best value overall.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section wrap" style="padding-top:0;">
+    <h2>How getting a quote works</h2>
+    <div class="cards3">
+      <div class="card"><div class="idx">01</div><h3>Tell us about you and your car</h3><p>A short, guided form — vehicle, driver details, address and driving history.</p></div>
+      <div class="card"><div class="idx">02</div><h3>Compare three quotes</h3><p>See price, excess and cover side by side, with no obligation to buy.</p></div>
+      <div class="card"><div class="idx">03</div><h3>Buy and you're covered</h3><p>Pay securely and get your policy number and documents straight away.</p></div>
+    </div>
+  </section>
+
+  ${footerHTML()}
+  `;
+}
+
+/* ------------------------------ HELP --------------------------------------- */
+
+function renderHelp(){
+  app().innerHTML = `
+  ${headerHTML()}
+  <section class="section wrap-narrow">
+    <h2>Help &amp; contact</h2>
+    <p class="lede">This is a demo platform, so nothing here connects to a real support team — but here's how it would work in the finished product.</p>
+    <div class="panel" style="margin-top:28px;">
+      <div class="p-head"><h3>Common questions</h3></div>
+      <div class="p-body">
+        <div class="summary-row"><span>How do I get a quote?</span><span>Use the "Get a quote" button — it takes about 5 minutes.</span></div>
+        <div class="summary-row"><span>Can I change my quote details?</span><span>Yes, use Back at any step, or start again from the home page.</span></div>
+        <div class="summary-row"><span>Is this a real insurance product?</span><span>No — this is a working proof of concept with mock data only.</span></div>
+        <div class="summary-row"><span>How do I contact support?</span><span>demo@northbridgeinsurance.co.uk · 0800 496 1200 (demo line)</span></div>
+      </div>
+    </div>
+    <div style="margin-top:24px;"><button class="btn btn-outline" data-action="go-home">Back to home</button></div>
+  </section>
+  ${footerHTML()}
+  `;
+}
+
+/* ------------------------------ QUOTE FORM --------------------------------- */
+
+function progressHTML(){
+  let steps = "";
+  for(let i=1;i<=TOTAL_STEPS;i++){
+    let cls = i < state.formStep ? "done" : (i === state.formStep ? "active" : "");
+    steps += `<li class="${cls}" data-n="${i<state.formStep?"":i}"><span class="lab-text">${STEP_LABELS[i-1]}</span></li>`;
+  }
+  const pct = Math.round((state.formStep-1) / (TOTAL_STEPS-1) * 100);
+  return `
+  <div class="progress-wrap">
+    <ul class="progress-steps">${steps}</ul>
+    <div class="progress-bar-mobile">
+      <div style="font-size:13px;font-weight:600;color:var(--ink);margin-bottom:8px;">Step ${state.formStep} of ${TOTAL_STEPS}: ${STEP_LABELS[state.formStep-1]}</div>
+      <div class="progress-bar-track"><div class="progress-bar-fill" style="width:${pct}%"></div></div>
+    </div>
+  </div>`;
+}
+
+function field(label, inner, id, hint){
+  return `<div class="field" id="field-${id}">
+    <label>${label}${hint?` <span class="hint">${hint}</span>`:""}</label>
+    ${inner}
+    <span class="err-msg"></span>
+  </div>`;
+}
+
+function renderQuoteForm(){
+  const fd = state.formData;
+  let bodyHTML = "";
+  let title = "";
+  let hint = "";
+
+  if(state.formStep === 1){
+    title = "Vehicle registration";
+    hint = "Look up your car so we don't ask you questions you already answered on your V5.";
+    bodyHTML = `
+      <div class="lookup-row">
+        ${field("Registration number", `<input type="text" maxlength="8" style="text-transform:uppercase;font-family:var(--mono);letter-spacing:.05em;" placeholder="AB12 CDE" data-field="reg" value="${esc(fd.reg)}">`, "reg")}
+        <button class="btn btn-ink" id="lookup-btn" data-action="lookup-vehicle" style="margin-bottom:0;">Look up vehicle</button>
+      </div>
+      <div class="vehicle-result ${fd.make?"show":""}" id="vehicle-result">
+        <div class="vr-row"><span>Make &amp; model</span><span id="vr-model">${esc(fd.make)} ${esc(fd.model)}</span></div>
+        <div class="vr-row"><span>Year</span><span id="vr-year">${esc(fd.year)}</span></div>
+        <div class="vr-row"><span>Estimated value</span><span id="vr-value">${fd.value?fmtGBP(Number(fd.value)):""}</span></div>
+      </div>
+      <div class="field-row" style="margin-top:20px;">
+        ${field("Estimated value (edit if needed)", `<input type="number" min="500" step="50" data-field="value" value="${esc(fd.value)}">`, "value")}
+        <div></div>
+      </div>
+    `;
+  }
+
+  if(state.formStep === 2){
+    title = "Driver details";
+    hint = "The main policyholder — that's you, the person taking out this policy.";
+    bodyHTML = `
+      <div class="field-row three">
+        ${field("Title", `<select data-field="title"><option ${fd.title==="Mr"?"selected":""}>Mr</option><option ${fd.title==="Mrs"?"selected":""}>Mrs</option><option ${fd.title==="Ms"?"selected":""}>Ms</option><option ${fd.title==="Miss"?"selected":""}>Miss</option><option ${fd.title==="Dr"?"selected":""}>Dr</option></select>`, "title")}
+        ${field("First name", `<input type="text" data-field="firstName" value="${esc(fd.firstName)}">`, "firstName")}
+        ${field("Last name", `<input type="text" data-field="lastName" value="${esc(fd.lastName)}">`, "lastName")}
+      </div>
+      <div class="field-row">
+        ${field("Date of birth", `<input type="date" data-field="dob" value="${esc(fd.dob)}" max="${todayISO()}">`, "dob")}
+        ${field("Gender (optional)", `<select data-field="gender"><option value="" ${!fd.gender?"selected":""}>Prefer not to say</option><option ${fd.gender==="Female"?"selected":""}>Female</option><option ${fd.gender==="Male"?"selected":""}>Male</option><option ${fd.gender==="Non-binary"?"selected":""}>Non-binary</option></select>`, "gender")}
+      </div>
+      <div class="field-row">
+        ${field("Marital status", `<select data-field="marital"><option ${fd.marital==="Single"?"selected":""}>Single</option><option ${fd.marital==="Married"?"selected":""}>Married</option><option ${fd.marital==="Civil partnership"?"selected":""}>Civil partnership</option><option ${fd.marital==="Divorced"?"selected":""}>Divorced</option></select>`, "marital")}
+        <div></div>
+      </div>
+      <div class="field-row">
+        ${field("Email address", `<input type="email" data-field="email" value="${esc(fd.email)}" placeholder="you@example.com">`, "email")}
+        ${field("Phone number", `<input type="tel" data-field="phone" value="${esc(fd.phone)}" placeholder="07700 900123">`, "phone")}
+      </div>
+    `;
+  }
+
+  if(state.formStep === 3){
+    title = "Home address";
+    hint = "Where the car is normally kept.";
+    bodyHTML = `
+      <div class="field-row one">
+        ${field("Address line 1", `<input type="text" data-field="addr1" value="${esc(fd.addr1)}">`, "addr1")}
+      </div>
+      <div class="field-row one">
+        ${field("Address line 2 (optional)", `<input type="text" data-field="addr2" value="${esc(fd.addr2)}">`, "addr2")}
+      </div>
+      <div class="field-row">
+        ${field("Town / city", `<input type="text" data-field="city" value="${esc(fd.city)}">`, "city")}
+        ${field("Postcode", `<input type="text" style="text-transform:uppercase;" data-field="postcode" value="${esc(fd.postcode)}" placeholder="SW1A 1AA">`, "postcode")}
+      </div>
+      <div class="field-row">
+        ${field("Years at this address", `<select data-field="yearsAtAddress"><option value="lt1" ${fd.yearsAtAddress==="lt1"?"selected":""}>Less than 1 year</option><option value="1-2" ${fd.yearsAtAddress==="1-2"?"selected":""}>1–2 years</option><option value="3-5" ${fd.yearsAtAddress==="3-5"?"selected":""}>3–5 years</option><option value="5plus" ${fd.yearsAtAddress==="5plus"?"selected":""}>5+ years</option></select>`, "yearsAtAddress")}
+        <div></div>
+      </div>
+      ${fd.yearsAtAddress==="lt1" ? `<div class="conditional-block">Since you've been at this address less than a year, we'd normally ask for your previous address too — skipped here for the demo.</div>` : ""}
+    `;
+  }
+
+  if(state.formStep === 4){
+    title = "Driving licence";
+    hint = "";
+    bodyHTML = `
+      <div class="field-row">
+        ${field("Licence type", `<select data-field="licenceType"><option ${fd.licenceType==="Full UK"?"selected":""}>Full UK</option><option ${fd.licenceType==="Provisional"?"selected":""}>Provisional</option><option ${fd.licenceType==="EU"?"selected":""}>EU</option><option ${fd.licenceType==="International"?"selected":""}>International</option></select>`, "licenceType")}
+        ${field("Licence number", `<input type="text" data-field="licenceNumber" value="${esc(fd.licenceNumber)}" placeholder="MITCH901234AB9CD">`, "licenceNumber")}
+      </div>
+      <div class="field-row">
+        ${field("Date you passed your test", `<input type="date" data-field="datePassed" value="${esc(fd.datePassed)}" max="${todayISO()}">`, "datePassed")}
+        ${field("Current penalty points", `<select data-field="points">${[0,3,4,5,6,7,8,9,10,11,12].map(p=>`<option ${String(fd.points)===String(p)?"selected":""}>${p}</option>`).join("")}</select>`, "points")}
+      </div>
+    `;
+  }
+
+  if(state.formStep === 5){
+    title = "Claims &amp; convictions";
+    hint = "Being upfront here keeps your price accurate — insurers do check.";
+    bodyHTML = `
+      <div class="field" style="margin-bottom:22px;">
+        <label>Have you made any car insurance claims in the last 5 years?</label>
+        <div class="toggle-yn" style="margin-top:6px;">
+          <button type="button" class="${fd.hasClaims===true?"active":""}" data-action="set-yn" data-key="hasClaims" data-val="true">Yes</button>
+          <button type="button" class="${fd.hasClaims===false?"active":""}" data-action="set-yn" data-key="hasClaims" data-val="false">No</button>
+        </div>
+      </div>
+      ${fd.hasClaims===true ? `
+      <div class="conditional-block" style="margin-bottom:22px;">
+        <div class="field-row">
+          ${field("Number of claims", `<select data-field="claimsCount">${[1,2,3,4].map(n=>`<option ${String(fd.claimsCount)===String(n)?"selected":""}>${n}</option>`).join("")}</select>`, "claimsCount")}
+          ${field("Type of claim", `<select data-field="claimType"><option ${fd.claimType==="Accidental Damage"?"selected":""}>Accidental Damage</option><option ${fd.claimType==="Windscreen"?"selected":""}>Windscreen</option><option ${fd.claimType==="Theft"?"selected":""}>Theft</option><option ${fd.claimType==="Fire"?"selected":""}>Fire</option><option ${fd.claimType==="Third Party Damage"?"selected":""}>Third Party Damage</option></select>`, "claimType")}
+        </div>
+        <div class="field-row">
+          ${field("Date of most recent claim", `<input type="date" data-field="claimDate" value="${esc(fd.claimDate)}" max="${todayISO()}">`, "claimDate")}
+          ${field("Fault status", `<select data-field="claimFault"><option ${fd.claimFault==="Non-fault"?"selected":""}>Non-fault</option><option ${fd.claimFault==="Fault"?"selected":""}>Fault</option><option ${fd.claimFault==="Split liability"?"selected":""}>Split liability</option></select>`, "claimFault")}
+        </div>
+      </div>` : ""}
+      <div class="field" style="margin-bottom:10px;">
+        <label>Any driving convictions or endorsements?</label>
+        <div class="toggle-yn" style="margin-top:6px;">
+          <button type="button" class="${fd.hasConvictions===true?"active":""}" data-action="set-yn" data-key="hasConvictions" data-val="true">Yes</button>
+          <button type="button" class="${fd.hasConvictions===false?"active":""}" data-action="set-yn" data-key="hasConvictions" data-val="false">No</button>
+        </div>
+      </div>
+      ${fd.hasConvictions===true ? `
+      <div class="conditional-block">
+        <div class="field-row">
+          ${field("Conviction code", `<select data-field="convictionCode"><option ${fd.convictionCode==="SP30"?"selected":""}>SP30 — Exceeding speed limit</option><option ${fd.convictionCode==="DR10"?"selected":""}>DR10 — Drink driving</option><option ${fd.convictionCode==="CU80"?"selected":""}>CU80 — Using a mobile phone</option><option ${fd.convictionCode==="TS10"?"selected":""}>TS10 — Failing to comply with traffic signs</option></select>`, "convictionCode")}
+          ${field("Date of conviction", `<input type="date" data-field="convictionDate" value="${esc(fd.convictionDate)}" max="${todayISO()}">`, "convictionDate")}
+        </div>
+      </div>` : ""}
+    `;
+  }
+
+  if(state.formStep === 6){
+    title = "Occupation";
+    hint = "";
+    bodyHTML = `
+      <div class="field-row">
+        ${field("Employment status", `<select data-field="employment"><option ${fd.employment==="Employed"?"selected":""}>Employed</option><option ${fd.employment==="Self-employed"?"selected":""}>Self-employed</option><option ${fd.employment==="Unemployed"?"selected":""}>Unemployed</option><option ${fd.employment==="Retired"?"selected":""}>Retired</option><option ${fd.employment==="Student"?"selected":""}>Student</option></select>`, "employment")}
+        <div></div>
+      </div>
+      ${(fd.employment==="Employed"||fd.employment==="Self-employed") ? `
+      <div class="field-row">
+        ${field("Job title", `<select data-field="jobTitle">${OCCUPATIONS.map(o=>`<option ${fd.jobTitle===o?"selected":""}>${o}</option>`).join("")}</select>`, "jobTitle")}
+        ${field("Industry", `<select data-field="industry">${INDUSTRIES.map(o=>`<option ${fd.industry===o?"selected":""}>${o}</option>`).join("")}</select>`, "industry")}
+      </div>
+      <div class="field-row">
+        ${field("Approximate annual income (optional)", `<input type="number" min="0" step="1000" data-field="income" value="${esc(fd.income)}" placeholder="35000">`, "income")}
+        <div></div>
+      </div>` : ""}
+    `;
+  }
+
+  if(state.formStep === 7){
+    title = "Annual mileage";
+    hint = "A rough estimate is fine.";
+    bodyHTML = `
+      <div class="field-row one">
+        ${field("Estimated annual mileage", `<input type="range" min="1000" max="25000" step="500" data-field="mileage" value="${esc(fd.mileage)}" id="mileage-slider" style="width:100%;">
+        <div style="text-align:center;font-family:var(--serif);font-size:22px;color:var(--ink);margin-top:6px;" id="mileage-display">${Number(fd.mileage).toLocaleString()} miles / year</div>`, "mileage")}
+      </div>
+      <div class="field-row">
+        ${field("Where is the car parked overnight?", `<select data-field="parking"><option ${fd.parking==="Driveway"?"selected":""}>Driveway</option><option ${fd.parking==="Garage"?"selected":""}>Garage</option><option ${fd.parking==="Street"?"selected":""}>On the street</option><option ${fd.parking==="Car park"?"selected":""}>Private car park</option></select>`, "parking")}
+        <div></div>
+      </div>
+    `;
+  }
+
+  if(state.formStep === 8){
+    title = "Vehicle usage";
+    hint = "";
+    bodyHTML = `
+      <div class="field" style="margin-bottom:22px;">
+        <label>How is the car mainly used?</label>
+        <div class="radio-group" style="margin-top:8px;">
+          ${radioCard("usage","Social only","Just for leisure, shopping and visiting family or friends.",fd.usage)}
+          ${radioCard("usage","Social + Commuting","Everyday use plus commuting to a single place of work.",fd.usage)}
+          ${radioCard("usage","Business","Used for business travel between multiple sites or client visits.",fd.usage)}
+        </div>
+      </div>
+      <div class="field-row">
+        ${field("Named drivers besides yourself", `<select data-field="namedDrivers">${[0,1,2,3].map(n=>`<option ${String(fd.namedDrivers)===String(n)?"selected":""}>${n}</option>`).join("")}</select>`, "namedDrivers")}
+        <div></div>
+      </div>
+    `;
+  }
+
+  if(state.formStep === 9){
+    title = "Cover requirements";
+    hint = "Choose the level of cover and any extras you'd like included.";
+    bodyHTML = `
+      <div class="field" style="margin-bottom:22px;">
+        <label>Cover level</label>
+        <div class="radio-group" style="margin-top:8px;">
+          ${radioCard("coverLevel","Third Party","The legal minimum. Covers damage to others, not your own car.",fd.coverLevel)}
+          ${radioCard("coverLevel","Third Party, Fire & Theft","Third party cover, plus fire and theft for your own car.",fd.coverLevel)}
+          ${radioCard("coverLevel","Comprehensive","Covers your own car too, even if the accident is your fault.",fd.coverLevel)}
+        </div>
+      </div>
+      <div class="field-row">
+        ${field("Voluntary excess", `<select data-field="excess"><option value="0" ${fd.excess==="0"?"selected":""}>£0</option><option value="100" ${fd.excess==="100"?"selected":""}>£100</option><option value="250" ${fd.excess==="250"?"selected":""}>£250</option><option value="500" ${fd.excess==="500"?"selected":""}>£500</option></select>`, "excess", "Higher excess usually lowers your premium")}
+        ${field("Cover start date", `<input type="date" data-field="startDate" value="${esc(fd.startDate || todayISO())}" min="${todayISO()}">`, "startDate")}
+      </div>
+      <div class="field" style="margin-top:6px;">
+        <label>Optional extras</label>
+        <div style="margin-top:8px;">
+          ${checkRow("breakdown","Breakdown cover","Roadside assistance and recovery, nationwide.",fd.addons.breakdown)}
+          ${checkRow("legal","Legal expenses cover","Legal costs if you need to pursue or defend a claim.",fd.addons.legal)}
+          ${checkRow("courtesy","Guaranteed courtesy car","A replacement car while yours is being repaired.",fd.addons.courtesy)}
+          ${checkRow("ncdProtect","No claims discount protection","Keep your discount even after a claim.",fd.addons.ncdProtect)}
+        </div>
+      </div>
+    `;
+  }
+
+  const isFirst = state.formStep === 1;
+  const isLast = state.formStep === TOTAL_STEPS;
+
+  app().innerHTML = `
+  ${headerHTML()}
+  <section class="form-shell wrap-narrow">
+    ${progressHTML()}
+    <div class="form-card">
+      <h2>${title}</h2>
+      ${hint ? `<div class="step-hint">${hint}</div>` : `<div style="margin-bottom:10px;"></div>`}
+      <div id="form-fields">${bodyHTML}</div>
+      <div class="form-actions">
+        <button class="btn btn-ghost" data-action="${isFirst?"go-home":"form-back"}">${isFirst?"Cancel":"← Back"}</button>
+        <button class="btn btn-primary" data-action="form-next" id="next-btn">${isLast?"Get my quotes":"Next →"}</button>
+      </div>
+    </div>
+  </section>
+  ${footerHTML()}
+  `;
+
+  const slider = document.getElementById("mileage-slider");
+  if(slider){
+    slider.addEventListener("input", function(){
+      document.getElementById("mileage-display").textContent = Number(this.value).toLocaleString()+" miles / year";
+      state.formData.mileage = this.value;
+    });
+  }
+}
+
+function radioCard(key, value, sub, current){
+  const selected = current === value;
+  return `<label class="radio-card ${selected?"selected":""}" data-action="select-radio-card" data-key="${key}" data-value="${value}">
+    <input type="radio" name="${key}" ${selected?"checked":""} style="pointer-events:none;">
+    <div><div class="rc-title">${value}</div><div class="rc-sub">${sub}</div></div>
+  </label>`;
+}
+function checkRow(key, label, sub, checked){
+  return `<div class="check-row">
+    <input type="checkbox" id="addon-${key}" data-action="toggle-addon" data-key="${key}" ${checked?"checked":""}>
+    <div><label for="addon-${key}">${label}</label><div class="sub">${sub}</div></div>
+  </div>`;
+}
+
+/* ---- Validation per step ---- */
+function clearFieldErrors(){
+  document.querySelectorAll("#form-fields .field").forEach(f=>{
+    f.classList.remove("error");
+    const em = f.querySelector(".err-msg"); if(em) em.textContent="";
+  });
+}
+function setFieldError(id, msg){
+  const f = document.getElementById("field-"+id);
+  if(!f) return;
+  f.classList.add("error");
+  f.querySelector(".err-msg").textContent = msg;
+}
+function validateStep(){
+  clearFieldErrors();
+  const fd = state.formData;
+  let ok = true;
+
+  if(state.formStep === 1){
+    if(!fd.reg || fd.reg.trim().length < 4){ setFieldError("reg","Enter a valid registration number."); ok=false; }
+    if(!fd.make){ showToast("Look up your vehicle before continuing."); ok=false; }
+  }
+  if(state.formStep === 2){
+    if(!fd.firstName){ setFieldError("firstName","Enter your first name."); ok=false; }
+    if(!fd.lastName){ setFieldError("lastName","Enter your last name."); ok=false; }
+    if(!fd.dob){ setFieldError("dob","Enter your date of birth."); ok=false; }
+    else{
+      const age = Math.floor((new Date()-new Date(fd.dob))/(365.25*24*3600*1000));
+      if(age < 17){ setFieldError("dob","Driver must be at least 17 years old."); ok=false; }
+    }
+    if(!fd.marital){ setFieldError("marital","Select a marital status."); ok=false; }
+    if(!fd.email || !/^\S+@\S+\.\S+$/.test(fd.email)){ setFieldError("email","Enter a valid email address."); ok=false; }
+    if(!fd.phone || fd.phone.replace(/\D/g,"").length < 9){ setFieldError("phone","Enter a valid phone number."); ok=false; }
+  }
+  if(state.formStep === 3){
+    if(!fd.addr1){ setFieldError("addr1","Enter your address."); ok=false; }
+    if(!fd.city){ setFieldError("city","Enter your town or city."); ok=false; }
+    if(!fd.postcode || fd.postcode.trim().length < 5){ setFieldError("postcode","Enter a valid postcode."); ok=false; }
+  }
+  if(state.formStep === 4){
+    if(!fd.licenceNumber || fd.licenceNumber.trim().length < 5){ setFieldError("licenceNumber","Enter your licence number."); ok=false; }
+    if(fd.licenceType==="Full UK" && !fd.datePassed){ setFieldError("datePassed","Enter the date you passed your test."); ok=false; }
+  }
+  if(state.formStep === 5){
+    if(fd.hasClaims === null){ showToast("Let us know if you've made any claims."); ok=false; }
+    if(fd.hasClaims === true && !fd.claimDate){ setFieldError("claimDate","Enter the claim date."); ok=false; }
+    if(fd.hasConvictions === null){ showToast("Let us know about any convictions."); ok=false; }
+    if(fd.hasConvictions === true && !fd.convictionDate){ setFieldError("convictionDate","Enter the conviction date."); ok=false; }
+  }
+  if(state.formStep === 6){
+    if((fd.employment==="Employed"||fd.employment==="Self-employed") && !fd.jobTitle){ setFieldError("jobTitle","Select a job title."); ok=false; }
+  }
+  if(state.formStep === 9){
+    if(!fd.startDate){ fd.startDate = todayISO(); }
+  }
+  return ok;
+}
+
+/* ------------------------------ Quote calculation --------------------------- */
+
+function calculateBaseAnnualPremium(){
+  const fd = state.formData;
+  let base = 460;
+  base += (Number(fd.mileage)/1000) * 2.4;
+  if(fd.usage === "Business") base += 160;
+  else if(fd.usage === "Social + Commuting") base += 55;
+  base += Number(fd.namedDrivers) * 38;
+  const excessDiscount = {"0":0,"100":15,"250":42,"500":85}[fd.excess] || 0;
+  base -= excessDiscount;
+  if(fd.hasClaims === true) base += 190 * Number(fd.claimsCount || 1);
+  if(fd.hasConvictions === true) base += 140;
+  if(fd.coverLevel === "Comprehensive") base += 95;
+  else if(fd.coverLevel === "Third Party, Fire & Theft") base += 35;
+  if(fd.dob){
+    const age = Math.floor((new Date()-new Date(fd.dob))/(365.25*24*3600*1000));
+    if(age < 21) base += 340;
+    else if(age < 25) base += 210;
+    else if(age < 30) base += 90;
+    else if(age > 70) base += 60;
+  }
+  if(fd.licenceType === "Provisional") base += 260;
+  if(fd.addons.breakdown) base += 42;
+  if(fd.addons.legal) base += 24;
+  if(fd.addons.courtesy) base += 30;
+  if(fd.addons.ncdProtect) base += 20;
+  return Math.max(base, 280);
+}
+
+function generateQuotes(){
+  const base = calculateBaseAnnualPremium();
+  const fd = state.formData;
+  const benefitsFor = (cover, insurerIdx) => {
+    const list = [];
+    if(cover === "Comprehensive"){ list.push("Cover for your own car, any fault","Windscreen cover included","Courtesy car while repaired"); }
+    else if(cover === "Third Party, Fire & Theft"){ list.push("Fire and theft cover","Third party liability cover"); }
+    else { list.push("Legal minimum cover","Third party liability cover"); }
+    if(fd.addons.breakdown) list.push("24/7 UK breakdown cover");
+    if(fd.addons.legal) list.push("Legal expenses cover");
+    if(fd.addons.ncdProtect) list.push("No claims discount protected");
+    if(insurerIdx === 2) list.push("Multi-car discount available");
+    return list.slice(0,4);
+  };
+  const quotes = INSURER_PROFILES.map((ins, idx)=>{
+    const annual = Math.round(base * ins.multiplier * 100) / 100;
+    const monthly = Math.round((annual * 1.11 / 12) * 100) / 100;
+    return {
+      insurer: ins.name,
+      rating: ins.rating,
+      annual, monthly,
+      excess: Number(fd.excess) + ins.excessBase,
+      cover: fd.coverLevel,
+      benefits: benefitsFor(fd.coverLevel, idx),
+    };
+  }).sort((a,b)=>a.annual-b.annual);
+  return quotes;
+}
+
+/* ------------------------------ Loading -> Quotes --------------------------- */
+
+function renderQuoteLoading(){
+  app().innerHTML = `
+  ${headerHTML()}
+  <section class="wrap-narrow loading-panel">
+    <h2>Comparing quotes for you…</h2>
+    <p class="lede" style="margin:10px auto 0;">We're checking prices with our panel of insurers. This usually takes a few seconds.</p>
+    <div class="pulse-list" id="pulse-list">
+      <div class="pulse-item" data-i="0"><span class="dot"></span> Checking Meridian Direct</div>
+      <div class="pulse-item" data-i="1"><span class="dot"></span> Checking Castlegate Insurance</div>
+      <div class="pulse-item" data-i="2"><span class="dot"></span> Checking Anchor &amp; Oak Insurance</div>
+    </div>
+  </section>
+  `;
+  const items = document.querySelectorAll("#pulse-list .pulse-item");
+  let i = 0;
+  const tick = () => {
+    if(i < items.length){
+      items[i].classList.add("done");
+      i++;
+      setTimeout(tick, 550);
+    } else {
+      setTimeout(()=>{
+        state.quotes = generateQuotes();
+        go("quote-results");
+      }, 400);
+    }
+  };
+  setTimeout(tick, 500);
+}
+
+/* ------------------------------ Quote results -------------------------------- */
+
+function renderQuoteResults(){
+  const quotes = state.quotes;
+  app().innerHTML = `
+  ${headerHTML()}
+  <section class="wrap quotes-header">
+    <h2>Your quotes are ready</h2>
+    <p class="lede">Based on the details you gave us, here are 3 quotes for <strong>${esc(state.formData.coverLevel)}</strong> cover on your ${esc(state.formData.make)} ${esc(state.formData.model)}. Prices include the extras you selected.</p>
+  </section>
+  <section class="wrap" style="padding-bottom:70px;">
+    <div class="quote-grid">
+      ${quotes.map((q,i)=>`
+        <div class="quote-card ${i===0?"best":""}">
+          <div class="qc-head">
+            <div class="insurer">${q.insurer}</div>
+            <div class="badge-top">★ ${q.rating}</div>
+            <div class="cover-badge">${q.cover}</div>
+          </div>
+          <div class="qc-price">
+            <div class="price-annual">${fmtGBP(q.annual)} <span style="font-size:14px;color:var(--slate-light);font-weight:400;">/ year</span></div>
+            <div class="price-monthly">or ${fmtGBP(q.monthly)} / month over 12 months</div>
+          </div>
+          <div class="qc-details">
+            <div class="dr"><span>Voluntary + compulsory excess</span><span>${fmtGBP(q.excess)}</span></div>
+            <div class="dr"><span>Cover level</span><span>${q.cover}</span></div>
+            <ul class="benefits">${q.benefits.map(b=>`<li>${b}</li>`).join("")}</ul>
+          </div>
+          <div class="qc-actions">
+            <button class="btn btn-outline btn-block btn-sm" data-action="view-quote-details" data-i="${i}">View details</button>
+            <button class="btn btn-primary btn-block" data-action="select-quote" data-i="${i}">Select this quote</button>
+          </div>
+        </div>
+      `).join("")}
+    </div>
+    <div style="margin-top:28px;">
+      <button class="btn btn-ghost" data-action="go-quote-start">Start a new quote</button>
+    </div>
+  </section>
+  ${footerHTML()}
+  `;
+}
+
+function quoteDetailsModalHTML(i){
+  const q = state.quotes[i];
+  return `
+    <h3>${q.insurer} — full details</h3>
+    <div class="summary-row"><span>Annual premium</span><span>${fmtGBP(q.annual)}</span></div>
+    <div class="summary-row"><span>Monthly payment</span><span>${fmtGBP(q.monthly)} × 12</span></div>
+    <div class="summary-row"><span>Cover level</span><span>${q.cover}</span></div>
+    <div class="summary-row"><span>Total excess</span><span>${fmtGBP(q.excess)}</span></div>
+    <div class="summary-row"><span>Insurer rating</span><span>${q.rating}</span></div>
+    <div class="summary-row"><span>Included benefits</span><span style="text-align:right;">${q.benefits.join(", ")}</span></div>
+    <div class="banner info" style="margin-top:18px;">Full policy wording would appear here in the live product. This is demo content only.</div>
+    <div class="modal-close-row">
+      <button class="btn btn-ghost" data-action="close-modal">Close</button>
+      <button class="btn btn-primary" data-action="select-quote" data-i="${i}">Select this quote</button>
+    </div>
+  `;
+}
+
+/* ------------------------------ Purchase ------------------------------------ */
+
+function renderPurchase(){
+  const q = state.quotes[state.selectedQuoteIndex];
+  const fd = state.formData;
+  app().innerHTML = `
+  ${headerHTML()}
+  <section class="wrap-narrow" style="padding:40px 24px 80px;">
+    <h2 style="margin-bottom:6px;">Confirm your details</h2>
+    <p class="lede" style="margin-bottom:26px;">Check everything below is correct before you continue to payment.</p>
+
+    <div class="summary-block">
+      <div class="sb-head"><span>Driver &amp; vehicle</span><a data-action="edit-details">Edit</a></div>
+      <div class="sb-body">
+        <div class="summary-row"><span>Name</span><span>${esc(fd.title)} ${esc(fd.firstName)} ${esc(fd.lastName)}</span></div>
+        <div class="summary-row"><span>Email</span><span>${esc(fd.email)}</span></div>
+        <div class="summary-row"><span>Vehicle</span><span>${esc(fd.make)} ${esc(fd.model)} (${esc(fd.year)})</span></div>
+        <div class="summary-row"><span>Registration</span><span>${esc(fd.reg)}</span></div>
+        <div class="summary-row"><span>Address</span><span>${esc(fd.addr1)}, ${esc(fd.city)} ${esc(fd.postcode)}</span></div>
+      </div>
+    </div>
+
+    <div class="summary-block">
+      <div class="sb-head"><span>Selected plan</span><a data-action="go-back-to-quotes">Change</a></div>
+      <div class="sb-body">
+        <div class="summary-row"><span>Insurer</span><span>${q.insurer}</span></div>
+        <div class="summary-row"><span>Cover level</span><span>${q.cover}</span></div>
+        <div class="summary-row"><span>Excess</span><span>${fmtGBP(q.excess)}</span></div>
+        <div class="summary-row"><span>Cover start date</span><span>${fmtDateNice(fd.startDate)}</span></div>
+      </div>
+    </div>
+
+    <div class="price-total">
+      <div>
+        <div class="lab">Total to pay today</div>
+      </div>
+      <div class="val">${fmtGBP(q.annual)} <small>/ year (${fmtGBP(q.monthly)}/mo)</small></div>
+    </div>
+
+    <button class="btn btn-primary btn-block" data-action="confirm-details">Confirm details &amp; continue to payment</button>
+    <div style="text-align:center;margin-top:14px;"><button class="btn btn-ghost" data-action="go-back-to-quotes">← Back to quotes</button></div>
+  </section>
+  ${footerHTML()}
+  `;
+}
+
+function renderPayment(){
+  const q = state.quotes[state.selectedQuoteIndex];
+  app().innerHTML = `
+  ${headerHTML()}
+  <section class="wrap-narrow" style="padding:40px 24px 80px;">
+    <h2 style="margin-bottom:6px;">Payment</h2>
+    <p class="lede" style="margin-bottom:22px;">This is a demo payment form — no real card is charged and no payment gateway is contacted.</p>
+
+    <div class="pay-note">Demo mode: any card number will work. Try 4242 4242 4242 4242.</div>
+
+    <div class="card-mock">
+      <div class="card-mock-face">
+        <div class="cbrand">NORTHBRIDGE PAY</div>
+        <div class="cnum" id="card-preview">•••• •••• •••• ••••</div>
+        <div class="crow"><span id="name-preview">CARDHOLDER NAME</span><span id="exp-preview">MM/YY</span></div>
+      </div>
+    </div>
+
+    <div class="field-row one">
+      ${field("Name on card", `<input type="text" id="pay-name" placeholder="${esc(state.formData.firstName)} ${esc(state.formData.lastName)}">`, "pay-name")}
+    </div>
+    <div class="field-row one">
+      ${field("Card number", `<input type="text" id="pay-number" maxlength="19" placeholder="4242 4242 4242 4242">`, "pay-number")}
+    </div>
+    <div class="field-row three">
+      ${field("Expiry", `<input type="text" id="pay-exp" maxlength="5" placeholder="MM/YY">`, "pay-exp")}
+      ${field("CVV", `<input type="text" id="pay-cvv" maxlength="4" placeholder="123">`, "pay-cvv")}
+      ${field("Postcode", `<input type="text" id="pay-postcode" value="${esc(state.formData.postcode)}">`, "pay-postcode")}
+    </div>
+
+    <button class="btn btn-primary btn-block" id="pay-btn" data-action="submit-payment">
+      Pay ${fmtGBP(q.annual)} securely
+    </button>
+    <div style="text-align:center;margin-top:14px;"><button class="btn btn-ghost" data-action="go-back-purchase">← Back</button></div>
+  </section>
+  ${footerHTML()}
+  `;
+
+  const numberInput = document.getElementById("pay-number");
+  const namePreview = document.getElementById("name-preview");
+  const cardPreview = document.getElementById("card-preview");
+  const expPreview = document.getElementById("exp-preview");
+  numberInput.addEventListener("input", function(){
+    let v = this.value.replace(/\D/g,"").slice(0,16);
+    this.value = v.replace(/(\d{4})(?=\d)/g,"$1 ");
+    cardPreview.textContent = (v.padEnd(16,"•").replace(/(.{4})/g,"$1 ").trim());
+  });
+  document.getElementById("pay-name").addEventListener("input", function(){
+    namePreview.textContent = this.value ? this.value.toUpperCase() : "CARDHOLDER NAME";
+  });
+  document.getElementById("pay-exp").addEventListener("input", function(){
+    let v = this.value.replace(/\D/g,"").slice(0,4);
+    if(v.length>=3) v = v.slice(0,2)+"/"+v.slice(2);
+    this.value = v;
+    expPreview.textContent = v || "MM/YY";
+  });
+}
+
+function processPayment(){
+  clearFieldErrors();
+  const name = document.getElementById("pay-name").value.trim();
+  const number = document.getElementById("pay-number").value.replace(/\s/g,"");
+  const exp = document.getElementById("pay-exp").value.trim();
+  const cvv = document.getElementById("pay-cvv").value.trim();
+  let ok = true;
+  if(!name){ setFieldError("pay-name","Enter the name on the card."); ok=false; }
+  if(number.length < 12){ setFieldError("pay-number","Enter a valid card number."); ok=false; }
+  if(!/^\d{2}\/\d{2}$/.test(exp)){ setFieldError("pay-exp","Enter a valid expiry date."); ok=false; }
+  if(cvv.length < 3){ setFieldError("pay-cvv","Enter a valid CVV."); ok=false; }
+  if(!ok) return;
+
+  const btn = document.getElementById("pay-btn");
+  btn.disabled = true;
+  btn.innerHTML = `<span class="spinner"></span> Processing payment…`;
+  setTimeout(()=>{
+    const q = state.quotes[state.selectedQuoteIndex];
+    const fd = state.formData;
+    const policyNumber = "NB-2026-" + String(Math.floor(10000+Math.random()*89999));
+    state.policy = {
+      number: policyNumber,
+      customerName: `${fd.firstName} ${fd.lastName}`,
+      email: fd.email,
+      insurer: q.insurer,
+      cover: q.cover,
+      excess: q.excess,
+      annual: q.annual,
+      monthly: q.monthly,
+      vehicle: `${fd.make} ${fd.model}`,
+      reg: fd.reg,
+      startDate: fd.startDate,
+      renewalDate: addDaysISO(365),
+      paymentStatus: "Paid",
+    };
+    go("policy-issued");
+  }, 1600);
+}
+
+/* ------------------------------ Policy issued -------------------------------- */
+
+function renderPolicyIssued(){
+  const p = state.policy;
+  app().innerHTML = `
+  ${headerHTML()}
+  <section class="wrap-narrow success-panel">
+    <div class="success-check">✓</div>
+    <h2>Policy issued successfully</h2>
+    <p class="lede" style="margin:10px auto 0;">Your cover is active from ${fmtDateNice(p.startDate)}. Keep your policy number somewhere safe.</p>
+    <div class="policy-num-box">${p.number}</div>
+    <div>
+      <button class="btn btn-primary" data-action="download-policy">Download policy document</button>
+    </div>
+    <div class="email-status"><span class="dot"></span> Confirmation email sent to ${esc(p.email)}</div>
+
+    <div class="summary-block" style="text-align:left;margin-top:36px;">
+      <div class="sb-head"><span>Policy summary</span></div>
+      <div class="sb-body">
+        <div class="summary-row"><span>Insurer</span><span>${p.insurer}</span></div>
+        <div class="summary-row"><span>Vehicle</span><span>${p.vehicle} (${p.reg})</span></div>
+        <div class="summary-row"><span>Cover level</span><span>${p.cover}</span></div>
+        <div class="summary-row"><span>Annual premium</span><span>${fmtGBP(p.annual)}</span></div>
+        <div class="summary-row"><span>Renewal date</span><span>${fmtDateNice(p.renewalDate)}</span></div>
+      </div>
+    </div>
+
+    <div style="margin-top:30px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+      <button class="btn btn-ink" data-action="go-portal-from-policy">Go to my customer portal</button>
+      <button class="btn btn-outline" data-action="go-home">Back to home</button>
+    </div>
+  </section>
+  ${footerHTML()}
+  `;
+}
+
+function policyDocumentText(p){
+  return `NORTHBRIDGE INSURANCE — DEMO POLICY DOCUMENT
+(This is a sample document generated for a proof-of-concept. It is not a real insurance contract.)
+
+Policy number:        ${p.number}
+Policyholder:          ${p.customerName}
+Vehicle:               ${p.vehicle} (${p.reg})
+Cover level:           ${p.cover}
+Insurer:               ${p.insurer}
+Voluntary + compulsory excess: £${p.excess}
+Annual premium:        £${p.annual.toFixed(2)}
+Monthly payment:       £${p.monthly.toFixed(2)} x 12
+Cover start date:      ${fmtDateNice(p.startDate)}
+Renewal date:          ${fmtDateNice(p.renewalDate)}
+Payment status:        ${p.paymentStatus}
+
+Thank you for choosing Northbridge Insurance (demo).
+`;
+}
+
+/* ------------------------------ Portal login ---------------------------------- */
+
+function renderPortalLogin(){
+  app().innerHTML = `
+  ${headerHTML()}
+  <section class="auth-shell wrap-narrow">
+    <div class="auth-card">
+      <h2>Customer login</h2>
+      <div class="sub">Access your policies, documents and payments.</div>
+      <div class="demo-hint">Demo mode — enter any email and password to log in.</div>
+      <div class="field" style="margin-bottom:16px;">
+        <label>Email address</label>
+        <input type="email" id="portal-email" placeholder="sarah.mitchell@email.com" value="sarah.mitchell@email.com">
+      </div>
+      <div class="field" style="margin-bottom:22px;">
+        <label>Password</label>
+        <input type="password" id="portal-password" placeholder="••••••••" value="demopassword">
+      </div>
+      <button class="btn btn-primary btn-block" data-action="portal-login">Log in</button>
+      <div style="text-align:center;margin-top:18px;">
+        <button class="btn btn-ghost" data-action="go-quote-start">New customer? Get a quote</button>
+      </div>
+    </div>
+  </section>
+  ${footerHTML()}
+  `;
+}
+
+function renderPortal(){
+  const p = state.policy || {
+    number:"NB-2026-00421", customerName:"Sarah Mitchell", insurer:"Meridian Direct", cover:"Comprehensive",
+    excess: 250, annual: 700.80, monthly: 64.90, vehicle:"Ford Fiesta 1.0 EcoBoost", reg:"AB12 CDE",
+    startDate: "2026-03-15", renewalDate: "2027-03-15", paymentStatus:"Paid",
+  };
+  const cancelled = state.portalCancelled;
+  app().innerHTML = `
+  ${headerHTML()}
+  <div class="app-shell">
+    <aside class="app-sidebar">
+      <div class="sb-title">My account</div>
+      <nav>
+        <a class="active">Dashboard</a>
+        <a data-action="go-home">Exit to homepage</a>
+        <a data-action="portal-logout">Log out</a>
+      </nav>
+    </aside>
+    <main class="app-main">
+      <h1 class="page-title">Welcome back, ${esc((p.customerName||"Sarah Mitchell").split(" ")[0])}</h1>
+      <div class="page-sub">Here's what's happening with your cover.</div>
+
+      <div class="policy-hero">
+        <div class="ph-left">
+          <div class="ph-status" style="${cancelled?"background:var(--error-bg);color:var(--error);":""}">${cancelled?"Cancelled":"Active"}</div>
+          <div class="pn">${p.number}</div>
+          <h2>${p.vehicle}</h2>
+          <div class="kv-list">
+            <div class="kv"><span>Cover level</span><span>${p.cover}</span></div>
+            <div class="kv"><span>Insurer</span><span>${p.insurer}</span></div>
+            <div class="kv"><span>Registration</span><span>${p.reg}</span></div>
+            <div class="kv"><span>Renewal date</span><span>${fmtDateNice(p.renewalDate)}</span></div>
+            <div class="kv"><span>Payment status</span><span>${cancelled?"N/A":p.paymentStatus}</span></div>
+          </div>
+        </div>
+        <div class="ph-right">
+          <div style="font-size:13px;color:var(--slate-light);">Annual premium</div>
+          <div style="font-family:var(--serif);font-size:28px;color:var(--ink);font-weight:600;margin-top:4px;">£${p.annual.toFixed(2)}</div>
+          <div style="font-size:13px;color:var(--slate-light);margin-top:2px;">or £${p.monthly.toFixed(2)} / month</div>
+          <div class="action-grid">
+            <button class="btn btn-outline btn-sm" data-action="portal-view-policy">View policy</button>
+            <button class="btn btn-outline btn-sm" data-action="portal-download">Download documents</button>
+            <button class="btn btn-outline btn-sm" data-action="portal-pay" ${cancelled?"disabled":""}>Make a payment</button>
+            <button class="btn btn-outline btn-sm" data-action="portal-change-details">Change details</button>
+            <button class="btn btn-outline btn-sm" data-action="portal-renew" ${cancelled?"disabled":""}>Renew policy</button>
+            <button class="btn btn-danger btn-sm" data-action="portal-cancel" ${cancelled?"disabled":""}>Cancel policy</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="p-head"><h3>Need help?</h3></div>
+        <div class="p-body">
+          <p style="font-size:14px;color:var(--slate-light);margin-bottom:14px;">Get in touch with our support team about this policy.</p>
+          <button class="btn btn-ink btn-sm" data-action="portal-contact">Contact support</button>
+        </div>
+      </div>
+    </main>
+  </div>
+  `;
+}
+
+/* ------------------------------ Admin login ------------------------------------ */
+
+function renderAdminLogin(){
+  app().innerHTML = `
+  ${headerHTML()}
+  <section class="auth-shell wrap-narrow">
+    <div class="auth-card">
+      <h2>Admin sign in</h2>
+      <div class="sub">Internal staff access only.</div>
+      <div class="demo-hint">Demo mode — enter any email and password to log in.</div>
+      <div class="field" style="margin-bottom:16px;">
+        <label>Staff email</label>
+        <input type="email" id="admin-email" placeholder="admin@northbridgeinsurance.co.uk" value="admin@northbridgeinsurance.co.uk">
+      </div>
+      <div class="field" style="margin-bottom:22px;">
+        <label>Password</label>
+        <input type="password" id="admin-password" placeholder="••••••••" value="demopassword">
+      </div>
+      <button class="btn btn-primary btn-block" data-action="admin-login">Log in</button>
+      <div style="text-align:center;margin-top:18px;">
+        <button class="btn btn-ghost" data-action="go-home">Back to homepage</button>
+      </div>
+    </div>
+  </section>
+  ${footerHTML()}
+  `;
+}
+
+/* ------------------------------ Admin dashboard --------------------------------- */
+
+const ADMIN_SECTIONS = [
+  {key:"overview", label:"Overview"},
+  {key:"customers", label:"Customers"},
+  {key:"quotes", label:"Quotes"},
+  {key:"policies", label:"Policies"},
+  {key:"payments", label:"Payments"},
+  {key:"insurers", label:"Insurers"},
+  {key:"claims", label:"Claims"},
+  {key:"renewals", label:"Renewals"},
+  {key:"cancellations", label:"Cancellations"},
+  {key:"complaints", label:"Complaints"},
+  {key:"reports", label:"Reports"},
+];
+
+function pillFor(status){
+  const s = status.toLowerCase();
+  if(["active","successful","resolved","converted","settled"].includes(s)) return `<span class="pill green">${status}</span>`;
+  if(["pending","due soon","in progress","quoted","open"].includes(s)) return `<span class="pill amber">${status}</span>`;
+  if(["cancelled","failed","rejected","lapsed","expired"].includes(s)) return `<span class="pill red">${status}</span>`;
+  return `<span class="pill grey">${status}</span>`;
+}
+
+function renderAdmin(){
+  const sec = state.adminSection;
+  app().innerHTML = `
+  ${headerHTML()}
+  <div class="app-shell">
+    <aside class="app-sidebar">
+      <div class="sb-title">Admin panel</div>
+      <nav>
+        ${ADMIN_SECTIONS.map(s=>`<a class="${sec===s.key?"active":""}" data-action="admin-nav" data-sec="${s.key}">${s.label}</a>`).join("")}
+        <a data-action="admin-logout" style="margin-top:10px;color:var(--error);">Log out</a>
+      </nav>
+    </aside>
+    <main class="app-main" id="admin-main">
+      ${renderAdminSection(sec)}
+    </main>
+  </div>
+  `;
+}
+
+function statCell(num, lab){
+  return `<div class="stat-cell"><div class="s-num">${num}</div><div class="s-lab">${lab}</div></div>`;
+}
+
+function tableToolbar(id, placeholder){
+  return `<div class="table-toolbar">
+    <input type="text" class="search-box" id="${id}" placeholder="${placeholder}" data-action="admin-search" data-target="${id}">
+  </div>`;
+}
+
+function buildTable(id, headers, rows){
+  return `<table class="data-table" id="${id}">
+    <thead><tr>${headers.map(h=>`<th>${h}</th>`).join("")}</tr></thead>
+    <tbody>${rows}</tbody>
+  </table>`;
+}
+
+function renderAdminSection(sec){
+  if(sec === "overview"){
+    return `
+      <h1 class="page-title">Overview</h1>
+      <div class="page-sub">A snapshot of everything happening on the Northbridge platform.</div>
+      <div class="stat-grid">
+        ${statCell(CUSTOMERS.length + 214, "Total customers")}
+        ${statCell(QUOTES_LOG.length + 542, "Total quotes")}
+        ${statCell(POLICIES.filter(p=>p.status==="Active").length + 361, "Active policies")}
+        ${statCell(PAYMENTS.filter(p=>p.status==="Successful").length + 892, "Payments this month")}
+        ${statCell(RENEWALS.length + 74, "Upcoming renewals")}
+      </div>
+      <div class="panel">
+        <div class="p-head"><h3>Quotes by cover level (last 30 days)</h3></div>
+        <div class="p-body">
+          <div class="bar-chart">
+            <div class="bar-col"><div class="bar-val">312</div><div class="bar" style="height:70%"></div><div class="bar-lab">Comprehensive</div></div>
+            <div class="bar-col"><div class="bar-val">148</div><div class="bar" style="height:33%"></div><div class="bar-lab">TP Fire &amp; Theft</div></div>
+            <div class="bar-col"><div class="bar-val">96</div><div class="bar" style="height:21%"></div><div class="bar-lab">Third Party</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="p-head"><h3>Recent activity</h3></div>
+        <div class="p-body">
+          <div class="summary-row"><span>New policy issued</span><span>Fatima Hussain — NB-2025-00389</span></div>
+          <div class="summary-row"><span>Payment received</span><span>Elena Novak — £78.60</span></div>
+          <div class="summary-row"><span>New complaint logged</span><span>David Chen — CMP-124</span></div>
+          <div class="summary-row"><span>Quote generated</span><span>New lead — QT-58460</span></div>
+        </div>
+      </div>
+    `;
+  }
+
+  if(sec === "customers"){
+    const rows = CUSTOMERS.map(c=>`<tr>
+      <td>${c.id}</td><td>${c.name}</td><td>${c.email}</td><td>${c.phone}</td><td>${c.policies}</td><td>${c.joined}</td>
+    </tr>`).join("");
+    return `<h1 class="page-title">Customers</h1><div class="page-sub">${CUSTOMERS.length} customer records (demo data).</div>
+      <div class="panel"><div class="p-body">
+      ${tableToolbar("search-customers","Search customers by name or email…")}
+      ${buildTable("tbl-customers",["ID","Name","Email","Phone","Policies","Joined"], rows)}
+      </div></div>`;
+  }
+
+  if(sec === "quotes"){
+    const rows = QUOTES_LOG.map(q=>`<tr>
+      <td>${q.id}</td><td>${q.customer}</td><td>${q.vehicle}</td><td>${q.date}</td><td>${pillFor(q.status)}</td><td>${q.premium}</td>
+    </tr>`).join("");
+    return `<h1 class="page-title">Quotes</h1><div class="page-sub">${QUOTES_LOG.length} quotes generated (demo data).</div>
+      <div class="panel"><div class="p-body">
+      ${tableToolbar("search-quotes","Search quotes by customer or vehicle…")}
+      ${buildTable("tbl-quotes",["Quote ID","Customer","Vehicle","Date","Status","Premium"], rows)}
+      </div></div>`;
+  }
+
+  if(sec === "policies"){
+    const rows = POLICIES.map(p=>`<tr>
+      <td>${p.number}</td><td>${p.customer}</td><td>${p.insurer}</td><td>${p.cover}</td><td>${p.renewal}</td><td>${pillFor(p.status)}</td><td>${p.premium}</td>
+    </tr>`).join("");
+    return `<h1 class="page-title">Policies</h1><div class="page-sub">${POLICIES.length} policies on file (demo data).</div>
+      <div class="panel"><div class="p-body">
+      ${tableToolbar("search-policies","Search policies by customer or number…")}
+      ${buildTable("tbl-policies",["Policy number","Customer","Insurer","Cover","Renewal","Status","Premium"], rows)}
+      </div></div>`;
+  }
+
+  if(sec === "payments"){
+    const rows = PAYMENTS.map(p=>`<tr>
+      <td>${p.id}</td><td>${p.customer}</td><td>${p.amount}</td><td>${p.date}</td><td>${p.method}</td><td>${pillFor(p.status)}</td>
+    </tr>`).join("");
+    return `<h1 class="page-title">Payments</h1><div class="page-sub">${PAYMENTS.length} payment records (demo data).</div>
+      <div class="panel"><div class="p-body">
+      ${tableToolbar("search-payments","Search payments by customer…")}
+      ${buildTable("tbl-payments",["Payment ID","Customer","Amount","Date","Method","Status"], rows)}
+      </div></div>`;
+  }
+
+  if(sec === "insurers"){
+    const rows = INSURER_ROWS.map(i=>`<tr>
+      <td>${i.name}</td><td>${i.policies}</td><td>${i.rating}</td><td>${i.since}</td><td>${i.contact}</td>
+    </tr>`).join("");
+    return `<h1 class="page-title">Insurer partners</h1><div class="page-sub">Panel insurers used to generate quotes.</div>
+      <div class="panel"><div class="p-body">
+      ${buildTable("tbl-insurers",["Insurer","Active policies","Rating","Partner since","Contact"], rows)}
+      </div></div>`;
+  }
+
+  if(sec === "claims"){
+    const rows = CLAIMS.map(c=>`<tr>
+      <td>${c.id}</td><td>${c.customer}</td><td>${c.policy}</td><td>${c.type}</td><td>${c.date}</td><td>${pillFor(c.status)}</td>
+    </tr>`).join("");
+    return `<h1 class="page-title">Claims</h1><div class="page-sub">${CLAIMS.length} claims logged (demo data).</div>
+      <div class="panel"><div class="p-body">
+      ${tableToolbar("search-claims","Search claims by customer…")}
+      ${buildTable("tbl-claims",["Claim ID","Customer","Policy","Type","Date","Status"], rows)}
+      </div></div>`;
+  }
+
+  if(sec === "renewals"){
+    const rows = RENEWALS.map(r=>`<tr>
+      <td>${r.policy}</td><td>${r.customer}</td><td>${r.renewalDate}</td><td>${r.newPremium}</td><td>${pillFor(r.status)}</td>
+    </tr>`).join("");
+    return `<h1 class="page-title">Renewals</h1><div class="page-sub">${RENEWALS.length} upcoming renewals (demo data).</div>
+      <div class="panel"><div class="p-body">
+      ${buildTable("tbl-renewals",["Policy number","Customer","Renewal date","New premium","Status"], rows)}
+      </div></div>`;
+  }
+
+  if(sec === "cancellations"){
+    const rows = CANCELLATIONS.map(c=>`<tr>
+      <td>${c.policy}</td><td>${c.customer}</td><td>${c.date}</td><td>${c.reason}</td><td>${c.refund}</td>
+    </tr>`).join("");
+    return `<h1 class="page-title">Cancellations</h1><div class="page-sub">${CANCELLATIONS.length} cancelled policies (demo data).</div>
+      <div class="panel"><div class="p-body">
+      ${buildTable("tbl-cancellations",["Policy number","Customer","Date","Reason","Refund"], rows)}
+      </div></div>`;
+  }
+
+  if(sec === "complaints"){
+    const rows = COMPLAINTS.map(c=>`<tr>
+      <td>${c.id}</td><td>${c.customer}</td><td>${c.subject}</td><td>${c.date}</td><td>${pillFor(c.status)}</td>
+    </tr>`).join("");
+    return `<h1 class="page-title">Complaints</h1><div class="page-sub">${COMPLAINTS.length} complaints logged (demo data).</div>
+      <div class="panel"><div class="p-body">
+      ${buildTable("tbl-complaints",["Complaint ID","Customer","Subject","Date","Status"], rows)}
+      </div></div>`;
+  }
+
+  if(sec === "reports"){
+    return `<h1 class="page-title">Reports</h1><div class="page-sub">Summary reporting across the platform (demo data).</div>
+      <div class="panel">
+        <div class="p-head"><h3>Conversion: quotes → policies</h3></div>
+        <div class="p-body">
+          <div class="bar-chart">
+            <div class="bar-col"><div class="bar-val">628</div><div class="bar" style="height:100%"></div><div class="bar-lab">Quotes</div></div>
+            <div class="bar-col"><div class="bar-val">412</div><div class="bar" style="height:66%"></div><div class="bar-lab">Policies</div></div>
+            <div class="bar-col"><div class="bar-val">66%</div><div class="bar" style="height:66%;background:var(--ink);"></div><div class="bar-lab">Conversion rate</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="p-head"><h3>Monthly premium written</h3></div>
+        <div class="p-body">
+          <div class="bar-chart">
+            <div class="bar-col"><div class="bar-val">£41k</div><div class="bar" style="height:55%"></div><div class="bar-lab">Jun</div></div>
+            <div class="bar-col"><div class="bar-val">£48k</div><div class="bar" style="height:64%"></div><div class="bar-lab">Jul</div></div>
+            <div class="bar-col"><div class="bar-val">£52k</div><div class="bar" style="height:70%"></div><div class="bar-lab">Aug</div></div>
+            <div class="bar-col"><div class="bar-val">£61k</div><div class="bar" style="height:82%"></div><div class="bar-lab">Sep</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="p-head"><h3>Export</h3></div>
+        <div class="p-body">
+          <p style="font-size:14px;color:var(--slate-light);margin-bottom:14px;">Download a demo CSV export of platform records.</p>
+          <button class="btn btn-outline btn-sm" data-action="admin-export">Export summary (.txt)</button>
+        </div>
+      </div>
+    `;
+  }
+  return "";
+}
+
+function filterTable(inputId){
+  const input = document.getElementById(inputId);
+  if(!input) return;
+  const val = input.value.toLowerCase();
+  const tableId = "tbl-" + inputId.replace("search-","");
+  const table = document.getElementById(tableId);
+  if(!table) return;
+  table.querySelectorAll("tbody tr").forEach(tr=>{
+    tr.style.display = tr.textContent.toLowerCase().includes(val) ? "" : "none";
+  });
+}
+
+/* ------------------------------ Router / main render --------------------------- */
+
+function render(){
+  switch(state.view){
+    case "home": return renderHome();
+    case "help": return renderHelp();
+    case "quote-form": return renderQuoteForm();
+    case "quote-loading": return renderQuoteLoading();
+    case "quote-results": return renderQuoteResults();
+    case "purchase": return renderPurchase();
+    case "payment": return renderPayment();
+    case "policy-issued": return renderPolicyIssued();
+    case "portal-login": return renderPortalLogin();
+    case "portal": return renderPortal();
+    case "admin-login": return renderAdminLogin();
+    case "admin": return renderAdmin();
+    default: return renderHome();
+  }
+}
+
+/* ------------------------------ Event delegation -------------------------------- */
+
+document.addEventListener("click", function(e){
+  const t = e.target.closest("[data-action]");
+  if(!t) return;
+  const action = t.dataset.action;
+
+  switch(action){
+    case "go-home": go("home"); break;
+    case "go-help": go("help"); break;
+    case "go-quote-start":
+      state.formStep = 1;
+      go("quote-form");
+      break;
+    case "go-portal-login": go("portal-login"); break;
+    case "go-admin-login": go("admin-login"); break;
+
+    case "form-back":
+      if(state.formStep > 1){ state.formStep--; render(); }
+      break;
+    case "form-next":
+      if(validateStep()){
+        if(state.formStep < TOTAL_STEPS){
+          state.formStep++;
+          render();
+        } else {
+          go("quote-loading");
+        }
+      }
+      break;
+
+    case "lookup-vehicle":{
+      const regInput = document.querySelector('[data-field="reg"]');
+      const reg = (regInput.value||"").toUpperCase().replace(/\s/g,"");
+      state.formData.reg = regInput.value;
+      if(!reg || reg.length < 4){ setFieldError("reg","Enter a valid registration number."); break; }
+      const btn = t;
+      const originalText = btn.textContent;
+      btn.disabled = true;
+      btn.innerHTML = `<span class="spinner dark"></span> Looking up…`;
+      setTimeout(()=>{
+        const result = VEHICLE_DB[reg] || VEHICLE_FALLBACK;
+        state.formData.make = result.make;
+        state.formData.model = result.model;
+        state.formData.year = result.year;
+        state.formData.value = result.value;
+        btn.disabled = false;
+        btn.textContent = originalText;
+        render();
+        showToast("Vehicle found: " + result.make + " " + result.model);
+      }, 800);
+      break;
+    }
+
+    case "select-radio-card":{
+      const key = t.dataset.key, val = t.dataset.value;
+      state.formData[key] = val;
+      render();
+      break;
+    }
+    case "set-yn":{
+      const key = t.dataset.key;
+      state.formData[key] = t.dataset.val === "true";
+      render();
+      break;
+    }
+    case "toggle-addon":{
+      const key = t.dataset.key;
+      state.formData.addons[key] = !state.formData.addons[key];
+      break;
+    }
+
+    case "view-quote-details":
+      openModal(quoteDetailsModalHTML(Number(t.dataset.i)));
+      break;
+    case "close-modal": closeModal(); break;
+    case "select-quote":
+      closeModal();
+      state.selectedQuoteIndex = Number(t.dataset.i);
+      go("purchase");
+      break;
+    case "go-back-to-quotes": go("quote-results"); break;
+    case "edit-details":
+      state.formStep = 2;
+      go("quote-form");
+      break;
+    case "confirm-details": go("payment"); break;
+    case "go-back-purchase": go("purchase"); break;
+    case "submit-payment": processPayment(); break;
+
+    case "download-policy":
+      downloadTextFile("Policy_Document_"+state.policy.number+".txt", policyDocumentText(state.policy));
+      showToast("Policy document downloaded");
+      break;
+    case "go-portal-from-policy":
+      state.portalLoggedIn = true;
+      state.portalCancelled = false;
+      go("portal");
+      break;
+
+    case "portal-login":
+      state.portalLoggedIn = true;
+      go("portal");
+      break;
+    case "portal-logout":
+      state.portalLoggedIn = false;
+      go("home");
+      break;
+    case "portal-view-policy":{
+      const p = state.policy || {number:"NB-2026-00421",vehicle:"Ford Fiesta 1.0 EcoBoost",cover:"Comprehensive",insurer:"Meridian Direct",excess:250,annual:700.80};
+      openModal(`
+        <h3>Policy ${p.number}</h3>
+        <div class="summary-row"><span>Vehicle</span><span>${p.vehicle}</span></div>
+        <div class="summary-row"><span>Cover level</span><span>${p.cover}</span></div>
+        <div class="summary-row"><span>Insurer</span><span>${p.insurer}</span></div>
+        <div class="summary-row"><span>Excess</span><span>£${p.excess}</span></div>
+        <div class="summary-row"><span>Annual premium</span><span>£${p.annual.toFixed ? p.annual.toFixed(2) : p.annual}</span></div>
+        <div class="modal-close-row"><button class="btn btn-primary" data-action="close-modal">Close</button></div>
+      `);
+      break;
+    }
+    case "portal-download":
+      downloadTextFile("Policy_Document_"+(state.policy?state.policy.number:"NB-2026-00421")+".txt",
+        policyDocumentText(state.policy || {number:"NB-2026-00421",customerName:"Sarah Mitchell",vehicle:"Ford Fiesta 1.0 EcoBoost",reg:"AB12 CDE",cover:"Comprehensive",insurer:"Meridian Direct",excess:250,annual:700.80,monthly:64.90,startDate:"2026-03-15",renewalDate:"2027-03-15",paymentStatus:"Paid"}));
+      showToast("Document downloaded");
+      break;
+    case "portal-pay":
+      openModal(`
+        <h3>Make a payment</h3>
+        <p style="font-size:14px;color:var(--slate-light);margin-bottom:16px;">This is a demo payment — no card will be charged.</p>
+        <div class="field" style="margin-bottom:14px;"><label>Card number</label><input type="text" placeholder="4242 4242 4242 4242"></div>
+        <div class="modal-close-row">
+          <button class="btn btn-ghost" data-action="close-modal">Cancel</button>
+          <button class="btn btn-primary" data-action="portal-pay-confirm">Pay now</button>
+        </div>
+      `);
+      break;
+    case "portal-pay-confirm":
+      closeModal();
+      showToast("Payment received — thank you");
+      break;
+    case "portal-change-details":
+      openModal(`
+        <h3>Change your details</h3>
+        <div class="field" style="margin-bottom:14px;"><label>Email address</label><input type="email" value="${state.formData.email || 'sarah.mitchell@email.com'}"></div>
+        <div class="field" style="margin-bottom:14px;"><label>Phone number</label><input type="tel" value="${state.formData.phone || '07700 900123'}"></div>
+        <div class="modal-close-row">
+          <button class="btn btn-ghost" data-action="close-modal">Cancel</button>
+          <button class="btn btn-primary" data-action="portal-details-saved">Save changes</button>
+        </div>
+      `);
+      break;
+    case "portal-details-saved":
+      closeModal();
+      showToast("Details updated");
+      break;
+    case "portal-renew":
+      openModal(`
+        <h3>Renew your policy</h3>
+        <p style="font-size:14px;color:var(--slate-light);margin-bottom:16px;">Your renewal quote is ${fmtGBP((state.policy?state.policy.annual:700.80)*1.04)} for the next 12 months.</p>
+        <div class="modal-close-row">
+          <button class="btn btn-ghost" data-action="close-modal">Not yet</button>
+          <button class="btn btn-primary" data-action="portal-renew-confirm">Confirm renewal</button>
+        </div>
+      `);
+      break;
+    case "portal-renew-confirm":
+      closeModal();
+      showToast("Policy renewed for another 12 months");
+      break;
+    case "portal-cancel":
+      openModal(`
+        <h3>Cancel your policy</h3>
+        <p style="font-size:14px;color:var(--slate-light);margin-bottom:16px;">Are you sure you want to cancel? This can't be undone in this demo.</p>
+        <div class="modal-close-row">
+          <button class="btn btn-ghost" data-action="close-modal">Keep my policy</button>
+          <button class="btn btn-danger" data-action="portal-cancel-confirm">Yes, cancel policy</button>
+        </div>
+      `);
+      break;
+    case "portal-cancel-confirm":
+      closeModal();
+      state.portalCancelled = true;
+      showToast("Policy cancelled");
+      render();
+      break;
+    case "portal-contact":
+      openModal(`
+        <h3>Contact support</h3>
+        <div class="field" style="margin-bottom:14px;"><label>Message</label><textarea rows="4" placeholder="How can we help?"></textarea></div>
+        <div class="modal-close-row">
+          <button class="btn btn-ghost" data-action="close-modal">Cancel</button>
+          <button class="btn btn-primary" data-action="portal-contact-sent">Send message</button>
+        </div>
+      `);
+      break;
+    case "portal-contact-sent":
+      closeModal();
+      showToast("Message sent — we'll reply within 1 working day");
+      break;
+
+    case "admin-login":
+      state.adminLoggedIn = true;
+      state.adminSection = "overview";
+      go("admin");
+      break;
+    case "admin-logout":
+      state.adminLoggedIn = false;
+      go("home");
+      break;
+    case "admin-nav":
+      state.adminSection = t.dataset.sec;
+      render();
+      break;
+    case "admin-export":
+      downloadTextFile("northbridge_summary_export.txt",
+        "NORTHBRIDGE INSURANCE — DEMO EXPORT\n\nCustomers: "+CUSTOMERS.length+"\nQuotes: "+QUOTES_LOG.length+"\nPolicies: "+POLICIES.length+"\nPayments: "+PAYMENTS.length+"\nClaims: "+CLAIMS.length+"\n\n(This is placeholder demo content.)");
+      showToast("Export downloaded");
+      break;
+  }
+});
+
+document.addEventListener("input", function(e){
+  const el = e.target;
+  if(el.dataset && el.dataset.field){
+    state.formData[el.dataset.field] = el.value;
+  }
+  if(el.dataset && el.dataset.action === "admin-search"){
+    filterTable(el.dataset.target);
+  }
+});
+document.addEventListener("change", function(e){
+  const el = e.target;
+  if(el.dataset && el.dataset.field){
+    state.formData[el.dataset.field] = el.value;
+    if(["yearsAtAddress","employment"].includes(el.dataset.field)){
+      render();
+    }
+  }
+});
+
+/* ------------------------------ Init -------------------------------------------- */
+render();
+</script>
+</body>
+</html>
