@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OzVisa Group — AI Visa Pathway Assessment</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FAF8F3;
+    --paper-dim:#F1EEE5;
+    --navy:#15263C;
+    --navy-deep:#0D1826;
+    --ink:#22262B;
+    --ink-soft:#5B6470;
+    --eucalyptus:#4B7C6E;
+    --eucalyptus-dark:#33564C;
+    --eucalyptus-tint:#E7EFEC;
+    --gold:#B5893C;
+    --gold-tint:#F3E9D4;
+    --line:#E1DACB;
+    --white:#FFFFFF;
+    --radius-lg:20px;
+    --radius-md:14px;
+    --radius-sm:9px;
+    --serif:'Fraunces', ui-serif, Georgia, 'Times New Roman', serif;
+    --sans:'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+    --shadow-card: 0 1px 2px rgba(21,38,60,0.04), 0 8px 24px rgba(21,38,60,0.06);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:var(--sans);
+    background:var(--paper);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}
+  }
+  a{color:inherit;}
+  .app{
+    max-width:1180px;
+    margin:0 auto;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+  }
+  .screen{display:none;}
+  .screen.active{display:flex; flex-direction:column; flex:1;}
+
+  /* ---------- Shared header ---------- */
+  .brandbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:22px 28px;
+  }
+  .brand{
+    display:flex; align-items:center; gap:10px;
+    font-family:var(--serif);
+    font-size:19px;
+    font-weight:600;
+    color:var(--navy);
+    letter-spacing:0.2px;
+  }
+  .brand-mark{
+    width:30px;height:30px;border-radius:8px;
+    background:var(--navy);
+    display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;
+  }
+  .brand-mark svg{width:16px;height:16px;}
+
+  /* ---------- Landing screen ---------- */
+  #screen-landing{padding-bottom:40px;}
+  .hero{
+    display:grid;
+    grid-template-columns:1.05fr 0.95fr;
+    gap:56px;
+    align-items:center;
+    padding:20px 28px 10px;
+    flex:1;
+  }
+  .hero-copy h1{
+    font-family:var(--serif);
+    font-weight:500;
+    font-size:44px;
+    line-height:1.15;
+    color:var(--navy);
+    margin:0 0 20px;
+    max-width:11.5ch;
+  }
+  .hero-copy p{
+    font-size:17px;
+    line-height:1.6;
+    color:var(--ink-soft);
+    max-width:46ch;
+    margin:0 0 30px;
+  }
+  .btn{
+    font-family:var(--sans);
+    font-weight:600;
+    font-size:15.5px;
+    border:none;
+    cursor:pointer;
+    border-radius:999px;
+    padding:15px 28px;
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    transition:transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .btn:active{transform:scale(0.98);}
+  .btn-primary{
+    background:var(--navy);
+    color:var(--white);
+    box-shadow:0 6px 18px rgba(21,38,60,0.22);
+  }
+  .btn-primary:hover{background:var(--navy-deep);}
+  .btn-secondary{
+    background:transparent;
+    color:var(--navy);
+    border:1.5px solid var(--line);
+  }
+  .btn-secondary:hover{border-color:var(--navy);}
+  .btn-gold{
+    background:var(--gold);
+    color:var(--white);
+    box-shadow:0 6px 18px rgba(181,137,60,0.28);
+  }
+  .btn-gold:hover{background:#9c7530;}
+  .disclaimer{
+    font-size:13px;
+    color:var(--ink-soft);
+    max-width:44ch;
+    line-height:1.55;
+    padding-top:22px;
+    border-top:1px solid var(--line);
+    margin-top:8px;
+  }
+
+  .hero-art{position:relative;}
+  .hero-art svg{width:100%; height:auto; display:block;}
+  .node-label{
+    font-family:var(--sans);
+    font-size:11.5px;
+    font-weight:600;
+    fill:var(--navy);
+  }
+  .node-label-au{
+    font-family:var(--sans);
+    font-size:12.5px;
+    font-weight:700;
+    fill:var(--white);
+  }
+  .route-line{
+    fill:none;
+    stroke:var(--eucalyptus);
+    stroke-width:1.6;
+    stroke-dasharray:5 6;
+    stroke-linecap:round;
+    stroke-dashoffset:220;
+    animation:draw 1.6s ease forwards;
+  }
+  .route-line.d2{animation-delay:0.12s;}
+  .route-line.d3{animation-delay:0.24s;}
+  .route-line.d4{animation-delay:0.36s;}
+  @keyframes draw{ to { stroke-dashoffset:0; } }
+  .satellite-node{
+    fill:var(--white);
+    stroke:var(--line);
+    stroke-width:1.4;
+  }
+
+  /* ---------- Chat screen ---------- */
+  #screen-chat{background:var(--paper);}
+  .chat-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:16px 28px;
+    border-bottom:1px solid var(--line);
+    background:var(--paper);
+  }
+  .chat-header-left{display:flex; align-items:center; gap:12px;}
+  .chat-title{
+    font-family:var(--serif);
+    font-size:17px;
+    font-weight:600;
+    color:var(--navy);
+  }
+  .chat-status{
+    font-size:12.5px;
+    color:var(--eucalyptus-dark);
+    display:flex; align-items:center; gap:6px;
+    margin-top:2px;
+  }
+  .pulse-dot{
+    width:7px;height:7px;border-radius:50%;
+    background:var(--eucalyptus);
+    animation:pulse 1.6s ease-in-out infinite;
+  }
+  @keyframes pulse{
+    0%,100%{opacity:1; transform:scale(1);}
+    50%{opacity:0.45; transform:scale(0.8);}
+  }
+  .q-counter{
+    font-size:12.5px;
+    color:var(--ink-soft);
+    background:var(--paper-dim);
+    padding:5px 12px;
+    border-radius:999px;
+  }
+
+  .chat-body{
+    flex:1;
+    overflow-y:auto;
+    padding:24px 20px 8px;
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+    max-width:760px;
+    width:100%;
+    margin:0 auto;
+  }
+  .msg-row{display:flex; gap:10px; align-items:flex-end; max-width:100%;}
+  .msg-row.user{justify-content:flex-end;}
+  .avatar{
+    width:28px;height:28px;border-radius:50%;
+    background:var(--eucalyptus);
+    color:var(--white);
+    font-size:11px; font-weight:700;
+    display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;
+  }
+  .bubble{
+    padding:13px 16px;
+    border-radius:var(--radius-md);
+    font-size:15px;
+    line-height:1.55;
+    max-width:min(72%, 520px);
+    animation:rise 0.28s ease;
+  }
+  @keyframes rise{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);} }
+  .bubble.ai{
+    background:var(--white);
+    border:1px solid var(--line);
+    color:var(--ink);
+    border-bottom-left-radius:4px;
+  }
+  .bubble.user{
+    background:var(--navy);
+    color:var(--white);
+    border-bottom-right-radius:4px;
+  }
+  .typing-bubble{
+    display:flex; gap:4px; align-items:center;
+    padding:14px 16px;
+  }
+  .typing-dot{
+    width:6px;height:6px;border-radius:50%;
+    background:var(--ink-soft);
+    animation:bounce 1.1s infinite ease-in-out;
+  }
+  .typing-dot:nth-child(2){animation-delay:0.15s;}
+  .typing-dot:nth-child(3){animation-delay:0.3s;}
+  @keyframes bounce{
+    0%,60%,100%{transform:translateY(0); opacity:0.5;}
+    30%{transform:translateY(-4px); opacity:1;}
+  }
+
+  .chat-input-bar{
+    border-top:1px solid var(--line);
+    background:var(--paper);
+    padding:14px 20px 20px;
+  }
+  .chat-input-wrap{
+    max-width:760px;
+    margin:0 auto;
+    display:flex;
+    align-items:flex-end;
+    gap:10px;
+    background:var(--white);
+    border:1.5px solid var(--line);
+    border-radius:18px;
+    padding:8px 8px 8px 16px;
+  }
+  .chat-input-wrap:focus-within{border-color:var(--eucalyptus);}
+  textarea#chat-input{
+    flex:1;
+    border:none;
+    outline:none;
+    resize:none;
+    font-family:var(--sans);
+    font-size:15px;
+    line-height:1.5;
+    max-height:120px;
+    padding:8px 0;
+    background:transparent;
+    color:var(--ink);
+  }
+  .send-btn{
+    width:38px;height:38px;
+    border-radius:50%;
+    background:var(--navy);
+    border:none;
+    color:var(--white);
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;
+    flex-shrink:0;
+    transition:background 0.15s;
+  }
+  .send-btn:hover{background:var(--navy-deep);}
+  .send-btn:disabled{background:var(--line); cursor:not-allowed;}
+  .input-hint{
+    max-width:760px; margin:8px auto 0;
+    font-size:12px; color:var(--ink-soft); text-align:center;
+  }
+
+  /* ---------- Analysis screen ---------- */
+  #screen-analysis{
+    align-items:center; justify-content:center;
+    text-align:center;
+    flex:1;
+    gap:0;
+  }
+  .analysis-card{
+    max-width:420px;
+    padding:20px;
+  }
+  .analysis-ring{
+    width:64px;height:64px;
+    margin:0 auto 28px;
+    border-radius:50%;
+    border:3px solid var(--eucalyptus-tint);
+    border-top-color:var(--eucalyptus);
+    animation:spin 1s linear infinite;
+  }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+  .analysis-line{
+    font-size:15.5px;
+    color:var(--ink-soft);
+    margin:0 0 10px;
+    opacity:0;
+    font-family:var(--sans);
+  }
+  .analysis-line.show{
+    animation:fadein 0.5s ease forwards;
+  }
+  .analysis-line.done{color:var(--navy); font-weight:600;}
+  @keyframes fadein{ to{opacity:1;} }
+
+  /* ---------- Results screen ---------- */
+  #screen-results{padding:32px 28px 60px;}
+  .results-wrap{max-width:700px; margin:0 auto; width:100%;}
+  .eyebrow-plain{font-size:13px; color:var(--eucalyptus-dark); font-weight:600; margin-bottom:6px;}
+  .pathway-name{
+    font-family:var(--serif);
+    font-size:36px;
+    font-weight:600;
+    color:var(--navy);
+    margin:0 0 22px;
+    padding-bottom:18px;
+    border-bottom:2px solid var(--eucalyptus-tint);
+  }
+  .section-block{margin-bottom:30px;}
+  .section-heading{
+    font-family:var(--serif);
+    font-size:19px;
+    font-weight:600;
+    color:var(--navy);
+    margin:0 0 10px;
+  }
+  .why-text{font-size:15.5px; line-height:1.65; color:var(--ink);}
+  .factor-list{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:10px;}
+  .factor-list li{
+    display:flex; gap:10px; align-items:flex-start;
+    font-size:15px; color:var(--ink);
+    background:var(--eucalyptus-tint);
+    padding:12px 14px;
+    border-radius:var(--radius-sm);
+  }
+  .factor-check{color:var(--eucalyptus-dark); font-weight:700; flex-shrink:0;}
+  .alt-cards{display:flex; flex-direction:column; gap:12px;}
+  .alt-card{
+    border:1px solid var(--line);
+    background:var(--white);
+    border-radius:var(--radius-md);
+    padding:16px 18px;
+  }
+  .alt-name{font-weight:600; color:var(--navy); margin-bottom:4px; font-size:15.5px;}
+  .alt-reason{font-size:14.5px; color:var(--ink-soft); line-height:1.5;}
+  .nextstep-card{
+    background:var(--navy);
+    color:var(--white);
+    border-radius:var(--radius-lg);
+    padding:26px 26px;
+    margin-top:8px;
+  }
+  .nextstep-card p{font-size:14.5px; line-height:1.6; color:#C9D2DC; margin:0 0 18px;}
+  .nextstep-card h3{font-family:var(--serif); font-size:18px; margin:0 0 8px; font-weight:600;}
+  .final-disclaimer{
+    font-size:12.5px; color:var(--ink-soft); margin-top:22px; line-height:1.55;
+    border-top:1px solid var(--line); padding-top:16px;
+  }
+
+  /* ---------- Lead capture ---------- */
+  #screen-leadform{padding:32px 28px 60px;}
+  .lead-wrap{
+    max-width:900px; margin:0 auto; width:100%;
+    display:grid; grid-template-columns:0.85fr 1.15fr; gap:36px;
+  }
+  .summary-card{
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:var(--radius-lg);
+    padding:22px;
+    height:fit-content;
+  }
+  .summary-card h4{font-family:var(--serif); font-size:16px; color:var(--navy); margin:0 0 4px;}
+  .summary-card .sc-pathway{font-family:var(--serif); font-size:22px; font-weight:600; color:var(--navy); margin:2px 0 14px;}
+  .summary-card ul{margin:10px 0 0; padding-left:18px;}
+  .summary-card li{font-size:13.5px; color:var(--ink-soft); margin-bottom:6px; line-height:1.45;}
+
+  .form-card{
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:var(--radius-lg);
+    padding:28px;
+  }
+  .field{margin-bottom:16px;}
+  .field label{display:block; font-size:13.5px; font-weight:600; color:var(--navy); margin-bottom:6px;}
+  .field input, .field textarea{
+    width:100%;
+    padding:11px 13px;
+    border-radius:var(--radius-sm);
+    border:1.5px solid var(--line);
+    font-family:var(--sans);
+    font-size:14.5px;
+    color:var(--ink);
+    outline:none;
+    background:var(--paper);
+  }
+  .field input:focus, .field textarea:focus{border-color:var(--eucalyptus);}
+  .field textarea{resize:vertical; min-height:70px;}
+
+  /* ---------- Confirmation ---------- */
+  #screen-confirmation{align-items:center; justify-content:center; text-align:center; flex:1; padding:40px;}
+  .confirm-icon{
+    width:60px;height:60px;border-radius:50%;
+    background:var(--eucalyptus-tint);
+    display:flex;align-items:center;justify-content:center;
+    margin:0 auto 22px;
+  }
+  .confirm-title{font-family:var(--serif); font-size:26px; color:var(--navy); font-weight:600; margin:0 0 12px;}
+  .confirm-text{font-size:15px; color:var(--ink-soft); max-width:44ch; margin:0 auto 26px; line-height:1.6;}
+
+  @media (max-width:860px){
+    .hero{grid-template-columns:1fr; gap:34px; padding:12px 20px;}
+    .hero-copy h1{font-size:33px; max-width:none;}
+    .hero-art{order:-1; max-width:320px; margin:0 auto;}
+    .lead-wrap{grid-template-columns:1fr;}
+    .bubble{max-width:82%;}
+    .chat-header{padding:14px 16px;}
+    #screen-results, #screen-leadform{padding:24px 16px 50px;}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ============ 1. LANDING SCREEN ============ -->
+  <section id="screen-landing" class="screen active">
+    <div class="brandbar">
+      <div class="brand">
+        <span class="brand-mark">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M4 12c3-5 6-7 8-7s5 2 8 7c-3 5-6 7-8 7s-5-2-8-7z" stroke="white" stroke-width="1.6"/><circle cx="12" cy="12" r="2" fill="white"/></svg>
+        </span>
+        OzVisa Group
+      </div>
+      <div style="font-size:13px; color:var(--ink-soft);">Australian Visa &amp; Immigration Services</div>
+    </div>
+
+    <div class="hero">
+      <div class="hero-copy">
+        <h1>Not sure which Australian visa pathway is right for you?</h1>
+        <p>Tell us about your situation. Our AI Visa Assessment Assistant will ask a few questions and help identify potential visa pathways.</p>
+        <button class="btn btn-primary" onclick="startAssessment()">
+          Start AI Assessment
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="disclaimer">This assessment provides preliminary guidance only and does not constitute immigration or legal advice.</div>
+      </div>
+
+      <div class="hero-art">
+        <svg viewBox="0 0 380 340" xmlns="http://www.w3.org/2000/svg">
+          <path class="route-line d1" d="M50 60 C 120 90, 150 140, 195 175" />
+          <path class="route-line d2" d="M330 55 C 270 90, 230 130, 198 172" />
+          <path class="route-line d3" d="M35 260 C 100 230, 150 210, 195 182" />
+          <path class="route-line d4" d="M320 270 C 260 235, 230 210, 200 185" />
+
+          <circle class="satellite-node" cx="50" cy="55" r="30"/>
+          <text x="50" y="52" text-anchor="middle" class="node-label">Philippines</text>
+          <text x="50" y="65" text-anchor="middle" class="node-label" style="font-weight:400; fill:var(--ink-soft);">Partner</text>
+
+          <circle class="satellite-node" cx="332" cy="50" r="30"/>
+          <text x="332" y="47" text-anchor="middle" class="node-label">Thailand</text>
+          <text x="332" y="60" text-anchor="middle" class="node-label" style="font-weight:400; fill:var(--ink-soft);">Partner</text>
+
+          <circle class="satellite-node" cx="32" cy="265" r="30"/>
+          <text x="32" y="262" text-anchor="middle" class="node-label">Vietnam</text>
+          <text x="32" y="275" text-anchor="middle" class="node-label" style="font-weight:400; fill:var(--ink-soft);">Partner</text>
+
+          <circle class="satellite-node" cx="322" cy="275" r="30"/>
+          <text x="322" y="272" text-anchor="middle" class="node-label">Cambodia</text>
+          <text x="322" y="285" text-anchor="middle" class="node-label" style="font-weight:400; fill:var(--ink-soft);">Partner</text>
+
+          <circle cx="197" cy="178" r="44" fill="var(--navy)"/>
+          <text x="197" y="174" text-anchor="middle" class="node-label-au">Australia</text>
+          <text x="197" y="190" text-anchor="middle" class="node-label-au" style="font-size:9.5px; font-weight:400; opacity:0.75;">your pathway</text>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 2. AI CONVERSATION SCREEN ============ -->
+  <section id="screen-chat" class="screen">
+    <div class="chat-header">
+      <div class="chat-header-left">
+        <span class="brand-mark" style="width:34px;height:34px;">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M4 12c3-5 6-7 8-7s5 2 8 7c-3 5-6 7-8 7s-5-2-8-7z" stroke="white" stroke-width="1.6"/><circle cx="12" cy="12" r="2" fill="white"/></svg>
+        </span>
+        <div>
+          <div class="chat-title">OzVisa AI Assessment</div>
+          <div class="chat-status"><span class="pulse-dot"></span> Assessment in progress</div>
+        </div>
+      </div>
+      <div class="q-counter" id="q-counter">Question 1</div>
+    </div>
+
+    <div class="chat-body" id="chat-body"></div>
+
+    <div class="chat-input-bar">
+      <div class="chat-input-wrap">
+        <textarea id="chat-input" rows="1" placeholder="Type your answer in your own words…"></textarea>
+        <button class="send-btn" id="send-btn" onclick="handleSend()" aria-label="Send message">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 12h14M13 6l6 6-6 6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+      <div class="input-hint">This AI assessment is preliminary only and does not constitute immigration or legal advice.</div>
+    </div>
+  </section>
+
+  <!-- ============ 4. AI ANALYSIS ============ -->
+  <section id="screen-analysis" class="screen">
+    <div class="analysis-card">
+      <div class="analysis-ring"></div>
+      <p class="analysis-line" id="al-1">Analysing your situation…</p>
+      <p class="analysis-line" id="al-2">Identifying potential visa pathways…</p>
+      <p class="analysis-line" id="al-3">Preparing your preliminary assessment…</p>
+    </div>
+  </section>
+
+  <!-- ============ 5-7. RESULTS ============ -->
+  <section id="screen-results" class="screen">
+    <div class="results-wrap">
+      <div class="eyebrow-plain">Your Preliminary Visa Pathway</div>
+      <h2 class="pathway-name" id="res-pathway">—</h2>
+
+      <div class="section-block">
+        <h3 class="section-heading">Why this pathway may be relevant</h3>
+        <p class="why-text" id="res-why">—</p>
+      </div>
+
+      <div class="section-block">
+        <h3 class="section-heading">Key factors from your assessment</h3>
+        <ul class="factor-list" id="res-factors"></ul>
+      </div>
+
+      <div class="section-block" id="res-alt-block">
+        <h3 class="section-heading">Other pathways you may wish to explore</h3>
+        <div class="alt-cards" id="res-alternatives"></div>
+      </div>
+
+      <div class="nextstep-card">
+        <h3>Recommended Next Step</h3>
+        <p>Your situation should be reviewed by an Australian immigration professional before making any visa decision.</p>
+        <button class="btn btn-gold" onclick="goToLeadForm()">Get Professional Assessment</button>
+      </div>
+
+      <div class="final-disclaimer">This is a preliminary, AI-generated indication produced for demonstration purposes. It does not constitute immigration or legal advice and should not be relied upon as a determination of visa eligibility.</div>
+    </div>
+  </section>
+
+  <!-- ============ 8. LEAD CAPTURE ============ -->
+  <section id="screen-leadform" class="screen">
+    <div class="lead-wrap">
+      <div class="summary-card">
+        <h4>Your assessment summary</h4>
+        <div class="sc-pathway" id="lead-pathway">—</div>
+        <ul id="lead-factors"></ul>
+      </div>
+
+      <div class="form-card">
+        <h3 style="font-family:var(--serif); color:var(--navy); margin:0 0 6px; font-size:20px;">Get Professional Assessment</h3>
+        <p style="font-size:14px; color:var(--ink-soft); margin:0 0 20px;">Share your details and an OzVisa immigration professional will review your situation.</p>
+        <form id="lead-form" onsubmit="submitLead(event)">
+          <div class="field">
+            <label for="f-name">Full Name</label>
+            <input id="f-name" type="text" required placeholder="Jordan Smith">
+          </div>
+          <div class="field">
+            <label for="f-email">Email</label>
+            <input id="f-email" type="email" required placeholder="jordan@email.com">
+          </div>
+          <div class="field">
+            <label for="f-phone">Phone</label>
+            <input id="f-phone" type="tel" required placeholder="+61 4xx xxx xxx">
+          </div>
+          <div class="field">
+            <label for="f-message">Optional Message</label>
+            <textarea id="f-message" placeholder="Anything else you'd like OzVisa to know…"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center;">Submit Assessment Request</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONFIRMATION ============ -->
+  <section id="screen-confirmation" class="screen">
+    <div>
+      <div class="confirm-icon">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#33564C" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <h2 class="confirm-title">Thank you.</h2>
+      <p class="confirm-text">Your assessment request has been received. OzVisa Group can review your information and discuss the next steps with you.</p>
+      <button class="btn btn-secondary" onclick="resetApp()">Return to Homepage</button>
+    </div>
+  </section>
+
+</div>
+
+<script>
+/* ============================================================
+   OZVISA AI VISA PATHWAY ASSESSMENT — POC
+   Modular AI layer: tries the live Anthropic API first, and
+   falls back to a local mock reasoning engine if unavailable,
+   so the conversational demo always keeps working.
+   ============================================================ */
+
+const KNOWLEDGE_BASE = [
+  { name: "Partner Visa", desc: "For married or de facto partners of an Australian citizen/permanent resident who want to live together in Australia permanently." },
+  { name: "Fiancé Visa", desc: "Prospective Marriage visa for couples who are engaged but not yet married, where the partner is currently outside Australia and intends to marry after arrival." },
+  { name: "Visitor Visa", desc: "For people wanting to visit Australia temporarily — tourism, seeing family, or a short stay — without intending to live there permanently." },
+  { name: "Bridging Visa", desc: "Relevant when someone is already in Australia and their substantive visa has expired or is about to expire while another application is being decided." },
+  { name: "Family-related visa services", desc: "Broader family sponsorship situations, such as parents or other relatives, that don't fit a partner/fiancé pattern." },
+  { name: "Country-specific partner services", desc: "OzVisa has particular experience supporting partner applications involving the Philippines, Thailand, Vietnam and Cambodia." }
+];
+
+const SYSTEM_PROMPT = `You are the OzVisa AI Visa Assessment Assistant, embedded in the OzVisa Group website. You hold a short natural-language conversation with a website visitor to understand their situation and give a PRELIMINARY, non-binding indication of which Australian visa pathway may be worth exploring.
+
+KNOWLEDGE BASE — for this demo, only these service categories exist. Do not invent others:
+${KNOWLEDGE_BASE.map(k => `- ${k.name}: ${k.desc}`).join("\n")}
+
+YOUR JOB EACH TURN:
+1. Read the full conversation so far.
+2. Silently track what you already know: who the applicant wants to bring to/join in Australia, relationship type and how long, marital status (married / engaged / de facto / dating), where the partner currently lives, whether they are currently in or outside Australia, the user's goal (temporary visit vs permanent relocation), any prior Australian visa history, and any other circumstance the user has volunteered.
+3. Decide: do you already have enough information (typically after 4–7 exchanges) to give a useful preliminary pathway indication? If not, ask exactly ONE more relevant, natural, plain-language question. Never ask about something already answered, never ask a generic fixed question — tailor it to what is missing and what the user has already said. If an answer was vague, gently ask for clarification. If the user says "not sure" or similar, acknowledge it and move on to the next most useful question rather than getting stuck.
+4. Once you have enough information, respond with a full assessment instead of another question.
+
+STRICT SAFETY RULES:
+- Never say the user "is eligible" or "will be approved" for any visa.
+- Only ever describe a pathway as something that "may be relevant", "could be worth exploring", or "should be professionally assessed".
+- Never invent visa requirements or legal detail beyond the knowledge base above.
+- If the situation is unusual, complex, or doesn't clearly map to the knowledge base, still produce your best tentative pathway indication, framed cautiously, and lean harder on recommending professional review.
+- This is preliminary guidance only — never legal or immigration advice.
+- Keep language simple, warm and free of legal jargon.
+
+OUTPUT FORMAT — CRITICAL. Respond with ONLY raw JSON. No markdown fences. No commentary before or after. Match exactly one of these two shapes:
+
+To ask the next question:
+{"action":"ask","message":"<your next conversational message, 1-3 short sentences, warm and plain language>"}
+
+To deliver the final assessment:
+{"action":"assess","message":"<a short one-sentence transition>","assessment":{"pathway":"<one knowledge-base pathway name>","why":"<2-3 sentence personalised explanation referencing specific details the user gave, using hedging language>","keyFactors":["<2-4 short personalised factors drawn from the conversation>"],"alternatives":[{"name":"<pathway name>","reason":"<one sentence why it could also be worth exploring>"}]}}
+
+Only include an alternative pathway if it is genuinely plausible; an empty alternatives array is fine. Never return more than 2 alternatives. Always output valid JSON only, nothing else.`;
+
+const OPENING_MESSAGE = "Hi! I'm the OzVisa AI Assessment Assistant. I can help you understand which Australian visa pathways may be relevant to your situation.\n\nTo get started, tell me about your situation in your own words. For example, who you want to bring to Australia, where they currently live, and what you're hoping to achieve.";
+
+// ----- state -----
+let apiHistory = [];       // messages sent to the model: [{role,content}]
+let questionCount = 0;
+let latestAssessment = null;
+let usingMock = false;
+
+// ----- screen helpers -----
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function startAssessment(){
+  showScreen('screen-chat');
+  document.getElementById('chat-body').innerHTML = '';
+  apiHistory = [];
+  questionCount = 1;
+  updateCounter();
+  addMessage('ai', OPENING_MESSAGE);
+  document.getElementById('chat-input').focus();
+}
+
+function updateCounter(){
+  document.getElementById('q-counter').textContent = `Question ${questionCount}`;
+}
+
+function addMessage(role, text){
+  const body = document.getElementById('chat-body');
+  const row = document.createElement('div');
+  row.className = 'msg-row ' + (role === 'user' ? 'user' : 'ai');
+  if (role === 'ai'){
+    row.innerHTML = `<div class="avatar">AI</div><div class="bubble ai"></div>`;
+    row.querySelector('.bubble').textContent = text;
+  } else {
+    row.innerHTML = `<div class="bubble user"></div>`;
+    row.querySelector('.bubble').textContent = text;
+  }
+  body.appendChild(row);
+  body.scrollTop = body.scrollHeight;
+}
+
+function showTyping(){
+  const body = document.getElementById('chat-body');
+  const row = document.createElement('div');
+  row.className = 'msg-row ai';
+  row.id = 'typing-row';
+  row.innerHTML = `<div class="avatar">AI</div><div class="bubble ai typing-bubble"><span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span></div>`;
+  body.appendChild(row);
+  body.scrollTop = body.scrollHeight;
+}
+function hideTyping(){
+  const row = document.getElementById('typing-row');
+  if (row) row.remove();
+}
+
+// ----- auto-grow textarea + enter to send -----
+const inputEl = document.getElementById('chat-input');
+inputEl.addEventListener('input', () => {
+  inputEl.style.height = 'auto';
+  inputEl.style.height = Math.min(inputEl.scrollHeight, 120) + 'px';
+});
+inputEl.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && !e.shiftKey){
+    e.preventDefault();
+    handleSend();
+  }
+});
+
+let awaitingResponse = false;
+
+async function handleSend(){
+  const text = inputEl.value.trim();
+  if (!text || awaitingResponse) return;
+  addMessage('user', text);
+  apiHistory.push({ role: 'user', content: text });
+  inputEl.value = '';
+  inputEl.style.height = 'auto';
+  awaitingResponse = true;
+  document.getElementById('send-btn').disabled = true;
+  showTyping();
+
+  let result;
+  try {
+    result = await askLiveAI(apiHistory);
+  } catch (err){
+    console.warn('Live AI unavailable, using fallback reasoning engine:', err);
+    usingMock = true;
+    result = mockAI(apiHistory);
+  }
+
+  hideTyping();
+  awaitingResponse = false;
+  document.getElementById('send-btn').disabled = false;
+
+  if (result.action === 'assess'){
+    latestAssessment = result.assessment;
+    if (result.message) addMessage('ai', result.message);
+    apiHistory.push({ role: 'assistant', content: result.message || 'Thanks — I have enough to prepare your assessment.' });
+    setTimeout(runAnalysisSequence, 500);
+  } else {
+    questionCount += 1;
+    updateCounter();
+    addMessage('ai', result.message);
+    apiHistory.push({ role: 'assistant', content: result.message });
+  }
+}
+
+// ----- live AI call -----
+async function askLiveAI(history){
+  const response = await fetch("https://api.anthropic.com/v1/messages", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      model: "claude-sonnet-4-6",
+      max_tokens: 1000,
+      system: SYSTEM_PROMPT,
+      messages: history.map(h => ({ role: h.role, content: h.content }))
+    })
+  });
+
+  if (!response.ok) throw new Error("API request failed: " + response.status);
+  const data = await response.json();
+  const textBlocks = (data.content || []).filter(b => b.type === 'text').map(b => b.text).join('');
+  const jsonMatch = textBlocks.match(/\{[\s\S]*\}/);
+  if (!jsonMatch) throw new Error("No JSON found in model response");
+  const parsed = JSON.parse(jsonMatch[0]);
+  if (!parsed.action) throw new Error("Malformed model response");
+  return parsed;
+}
+
+// ----- fallback mock reasoning engine (used only if the live API is unreachable) -----
+function mockAI(history){
+  const allUserText = history.filter(h => h.role === 'user').map(h => h.content).join(' \n ');
+  const lower = allUserText.toLowerCase();
+
+  const slots = {
+    relationship: null,
+    country: null,
+    duration: null,
+    goal: null,
+    location: null,
+    visaHistory: null
+  };
+
+  if (/wife|husband|spouse|married/.test(lower)) slots.relationship = 'married';
+  else if (/fianc|engaged|propose/.test(lower)) slots.relationship = 'engaged';
+  else if (/de facto/.test(lower)) slots.relationship = 'de facto';
+  else if (/girlfriend|boyfriend|partner|dating/.test(lower)) slots.relationship = 'dating/partner';
+
+  const countries = ['philippines','thailand','vietnam','cambodia'];
+  const foundCountry = countries.find(c => lower.includes(c));
+  if (foundCountry) slots.country = foundCountry.charAt(0).toUpperCase() + foundCountry.slice(1);
+
+  const durMatch = lower.match(/(\d+)\s*(year|month)/);
+  if (durMatch) slots.duration = `${durMatch[1]} ${durMatch[2]}${durMatch[1] === '1' ? '' : 's'}`;
+
+  if (/permanent|move|relocate|migrate|live together|stay for good/.test(lower)) slots.goal = 'permanent';
+  else if (/visit|holiday|short trip|see them|tour/.test(lower)) slots.goal = 'temporary';
+
+  if (/overstay|expired visa|bridging|visa is running out|visa about to expire/.test(lower)) slots.visaHistory = 'expiring visa';
+
+  const askedCount = history.filter(h => h.role === 'assistant').length + 1;
+
+  const missingOrder = [
+    ['relationship', "Thanks for sharing that. Are you married, engaged, or currently dating or in a de facto relationship?"],
+    ['goal', "Is the plan for them to come to Australia permanently, or more of a temporary visit for now?"],
+    ['country', "Which country does your partner currently live in?"],
+    ['duration', "Roughly how long have the two of you been together?"],
+  ];
+
+  const stillMissing = missingOrder.filter(([key]) => !slots[key]);
+
+  if (stillMissing.length > 0 && askedCount <= 6){
+    const [, question] = stillMissing[0];
+    return { action: 'ask', message: question };
+  }
+
+  // enough info (or hit the question cap) — build assessment
+  let pathway = "Family-related visa services";
+  let why = "Based on what you've shared, your situation touches on a family or partner-related pathway, but a couple of details are still a little unclear.";
+  const alternatives = [];
+
+  if (slots.goal === 'permanent' && slots.relationship === 'married'){
+    pathway = "Partner Visa";
+    why = `Based on what you told us, you're married and hoping for your partner${slots.country ? ", currently living in " + slots.country + "," : ""} to live with you in Australia permanently. A Partner Visa may therefore be a pathway worth discussing with an immigration professional.`;
+  } else if (slots.goal === 'permanent' && slots.relationship === 'engaged'){
+    pathway = "Fiancé Visa";
+    why = `You've mentioned you're engaged${slots.country ? " to a partner currently in " + slots.country : ""} and hoping to build a life together in Australia. A Fiancé (Prospective Marriage) Visa may be worth exploring, since it's designed for couples in this situation before marriage.`;
+    alternatives.push({ name: "Partner Visa", reason: "If you marry before applying, a Partner Visa could become the more relevant option instead." });
+  } else if (slots.goal === 'permanent'){
+    pathway = "Partner Visa";
+    why = `You've described a long-term relationship${slots.duration ? " of around " + slots.duration : ""} with the goal of living together in Australia permanently. A Partner Visa (including the de facto pathway) may be worth exploring.`;
+    alternatives.push({ name: "Fiancé Visa", reason: "If marriage is planned before your partner arrives, this could also be relevant." });
+  } else if (slots.goal === 'temporary'){
+    pathway = "Visitor Visa";
+    why = "Since your goal sounds like a temporary stay rather than permanent relocation, a Visitor Visa may be the most relevant starting point to explore.";
+    alternatives.push({ name: "Partner Visa", reason: "If your plans shift toward permanent relocation later, this may become worth exploring." });
+  } else if (slots.visaHistory === 'expiring visa'){
+    pathway = "Bridging Visa";
+    why = "Because it sounds like there's an existing Australian visa that has expired or is about to, a Bridging Visa may be relevant while a further application is considered.";
+  }
+
+  if (slots.country){
+    alternatives.push({ name: "Country-specific partner services", reason: `OzVisa has specific experience supporting partner applications from ${slots.country}.` });
+  }
+
+  const keyFactors = [];
+  if (slots.country) keyFactors.push(`Partner currently lives in ${slots.country}`);
+  if (slots.duration) keyFactors.push(`Relationship of around ${slots.duration}`);
+  if (slots.goal) keyFactors.push(slots.goal === 'permanent' ? "Goal is permanent relocation to Australia" : "Goal is a temporary visit to Australia");
+  if (slots.relationship) keyFactors.push(`Relationship status: ${slots.relationship}`);
+  if (keyFactors.length === 0) keyFactors.push("Situation involves bringing a partner or family member to Australia");
+
+  return {
+    action: 'assess',
+    message: "Thanks — I have enough to put together a preliminary assessment for you.",
+    assessment: {
+      pathway,
+      why,
+      keyFactors: keyFactors.slice(0,4),
+      alternatives: alternatives.slice(0,2)
+    }
+  };
+}
+
+// ----- analysis sequence -----
+function runAnalysisSequence(){
+  showScreen('screen-analysis');
+  const lines = ['al-1','al-2','al-3'];
+  lines.forEach(id => document.getElementById(id).classList.remove('show','done'));
+  let i = 0;
+  function step(){
+    if (i > 0) document.getElementById(lines[i-1]).classList.add('done');
+    if (i < lines.length){
+      document.getElementById(lines[i]).classList.add('show');
+      i++;
+      setTimeout(step, 850);
+    } else {
+      setTimeout(populateResults, 500);
+    }
+  }
+  step();
+}
+
+// ----- results -----
+function populateResults(){
+  const a = latestAssessment || {
+    pathway: "Family-related visa services",
+    why: "We weren't able to gather quite enough detail this time — a professional review is the best next step.",
+    keyFactors: [],
+    alternatives: []
+  };
+
+  document.getElementById('res-pathway').textContent = a.pathway;
+  document.getElementById('res-why').textContent = a.why;
+
+  const factorsEl = document.getElementById('res-factors');
+  factorsEl.innerHTML = '';
+  (a.keyFactors || []).forEach(f => {
+    const li = document.createElement('li');
+    li.innerHTML = `<span class="factor-check">✓</span><span>${escapeHtml(f)}</span>`;
+    factorsEl.appendChild(li);
+  });
+
+  const altBlock = document.getElementById('res-alt-block');
+  const altEl = document.getElementById('res-alternatives');
+  altEl.innerHTML = '';
+  if (a.alternatives && a.alternatives.length > 0){
+    altBlock.style.display = '';
+    a.alternatives.forEach(alt => {
+      const div = document.createElement('div');
+      div.className = 'alt-card';
+      div.innerHTML = `<div class="alt-name">${escapeHtml(alt.name)}</div><div class="alt-reason">${escapeHtml(alt.reason)}</div>`;
+      altEl.appendChild(div);
+    });
+  } else {
+    altBlock.style.display = 'none';
+  }
+
+  showScreen('screen-results');
+}
+
+function escapeHtml(str){
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+// ----- lead capture -----
+function goToLeadForm(){
+  const a = latestAssessment;
+  document.getElementById('lead-pathway').textContent = a ? a.pathway : '—';
+  const ul = document.getElementById('lead-factors');
+  ul.innerHTML = '';
+  (a && a.keyFactors ? a.keyFactors : []).forEach(f => {
+    const li = document.createElement('li');
+    li.textContent = f;
+    ul.appendChild(li);
+  });
+  showScreen('screen-leadform');
+}
+
+function submitLead(e){
+  e.preventDefault();
+  showScreen('screen-confirmation');
+}
+
+function resetApp(){
+  apiHistory = [];
+  questionCount = 0;
+  latestAssessment = null;
+  document.getElementById('lead-form').reset();
+  showScreen('screen-landing');
+}
+</script>
+</body>
+</html>
